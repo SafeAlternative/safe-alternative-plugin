@@ -1,0 +1,36 @@
+.memexNotice .dashicons {
+    vertical-align: middle;
+    font-size: 17px;
+}
+.memexNotice {
+    font-size: 12px;
+    line-height: 1.85;
+    margin-left: 5px;
+}
+.memexNoticeWrapper {
+    padding: 3px;
+    background-color: #efefef;
+    border-radius: 3px;
+    margin: 5px auto 0;
+    width: 96%;
+    border: 1px solid #e5e5e5;
+}
+.Memex_AWB .button {
+    width: 100%;
+    box-shadow: 0 2px 4px #ccc;
+}
+.Memex_AWB .generateBtn {
+    background-color: white !important;
+    text-align: center;
+    height: 33px;
+}
+.Memex_AWB .generateBtn img {
+    vertical-align: middle;
+    height: 50% !important;
+    object-fit: contain;
+    width: 100%;
+    margin: 0;
+}
+.Memex_AWB .downloadBtn {
+    text-align: center;
+}

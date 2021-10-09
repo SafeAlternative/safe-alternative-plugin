@@ -1,0 +1,11 @@
+{
+    "name": "safealternative\/plugin",
+    "description": "Plugin-ul SafeAlternative All-in-one - Generare AWB si Metode de livrare",
+    "require": {
+        "php": "^7.2",
+        "tightenco\/collect": "^7.0",
+        "sameday-courier\/php-sdk": "^1.8",
+        "clegginabox\/pdf-merger": "dev-master",
+        "cebe\/markdown": "^1.2"
+    }
+}

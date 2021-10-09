@@ -1,0 +1,37 @@
+.dpdNotice .dashicons {
+    vertical-align: middle;
+    font-size: 17px;
+}
+.dpdNotice {
+    font-size: 12px;
+    line-height: 1.85;
+    margin-left: 5px;
+}
+.dpdNoticeWrapper {
+    padding: 3px;
+    background-color: #efefef;
+    border-radius: 3px;
+    margin: 5px auto 0;
+    width: 96%;
+    border: 1px solid #e5e5e5;
+}
+.DPD_AWB .button {
+    width: 100%;
+    box-shadow: 0 2px 4px #ccc;
+}
+.DPD_AWB .generateBtn {
+    background-color: white !important;
+    text-align: center;
+    height: 33px;
+}
+.DPD_AWB .generateBtn img {
+    vertical-align: middle;
+    height: 95% !important;
+    object-fit: contain;
+    width: 100%;
+    margin: 0;
+    image-rendering: -webkit-optimize-contrast;
+}
+.DPD_AWB .downloadBtn {
+    text-align: center;
+}

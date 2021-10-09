@@ -1,0 +1,41 @@
+.GLS_AWB .button {
+    width: 100%;
+    box-shadow: 0 2px 4px #ccc;
+}
+.GLS_AWB .generateBtn {
+    background-color: white !important;
+    text-align: center;
+    height: 33px;
+}
+.GLS_AWB .generateBtn img {
+    height: 90% !important;
+    object-fit: contain;
+    width: 100%;
+    margin: 0;
+    image-rendering: -webkit-optimize-contrast;
+}
+.GLS_AWB a {
+    text-align: center;
+}
+.glsNotice .dashicons {
+    vertical-align: middle;
+    font-size: 17px;
+}
+.glsNotice {
+    font-size: 12px;
+    line-height: 1.85;
+    margin-left: 5px;
+}
+.glsNotice .dashicons-image-rotate{
+    font-size: 12px;
+    position: relative;
+    top: 2.5px;
+}
+.glsNoticeWrapper {
+    padding: 3px;
+    background-color: #efefef;
+    border-radius: 3px;
+    margin: 5px auto 0;
+    width: 96%;
+    border: 1px solid #e5e5e5;
+}

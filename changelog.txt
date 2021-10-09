@@ -1,0 +1,341 @@
+### 2.15.4
+* [FanCourier] Am introdus optiunea de "Livrare Sambata" si am actualizat metoda de calcul tarif.
+
+### 2.15.3
+* [DPD - AWB] Am introdus posibilitatea de plata transport si plata ambalaj prin Contract/Tert.
+* [DPD - AWB] Am introdus posibilitatea de a seta - Greutatea standard - pentru colete. 
+* [NemoExpress - AWB] Am reparat mesajul de eroare la generarea awb-urilor. 
+* Am actualizat metoda de obtinere si modificare a statusurilor awb-urilor pentru curierii FanCourier, DPD, Sameday, ExpressCourier, Nemo, TeamCourier.
+
+### 2.15.2
+* [Cargus] Am scos diacriticele din campurile trimise pe AWB - la cerinta celor de la Cargus.
+* [DPD] Am adaugat campul `ref1` pentru a putea adauga informatii in AWB cu hook-ul `safealternative_awb_details`.
+* [DPD] Am adaugat noua functionalitate de DPDBox (pentru clientii premium).
+* [Livrare] Am reparat o problema cu selectia Oraselor si Judetelor in pagina de Checkout si am imbunatatit logica din spate.
+* [Memex - AWB] Am adaugat functionalitatea de call pick-up.
+* Am reparat multe bug-uri minore raportate de clientii nostri. Va multumim pentru feedback-ul oferit!
+
+### 2.15.1
+* Am adaugat posibilitatea de a face overwrite la pretul de la easybox folosind filtrul 'safealternative_overwrite_sameday_easybox_shipping'.
+
+### 2.15.0
+* [TeamCourier] Am adaugat firma de curierat Team Courier.
+* [Sameday] Am reparat o problema la checkout cand era folosit serviciul Easybox.
+* [ExpressCourier - AWB] Am reparat o problema la serviciile extra.
+* Am imbunatatit sistemul de autocompletare al codurilor postale la generarea de AWB.
+
+### 2.14.1
+* [FanCourier - AWB] Am rezolvat o problema la sincronizarea statusurilor AWB-urilor in momentul in care erau peste 400 de AWB-uri de actualizat.
+
+### 2.14.0
+* [Memex - AWB] Am adaugat urmatoarele functionalitati: "Numar colete" si "Asigurare colete".
+* [Memex - AWB] Am adaugat posibilitatea de printare si generare a AWB-urilor cu mai multe colete.
+
+### 2.13.1
+* Plugin-ul SafeAlternative este acum compatibil si cu versiunea de PHP 8.0.
+* Am rezolvat niste situatii atipice la listarea judetelor si oraselor in Checkout si Cart.
+* Am imbunatatit modul in care afisam changelog-ul plugin-ului.
+
+### 2.13.0 
+* [ExpressCourier] Am adaugat firma de curierat Express Courier.
+* Am reparat multe bug-uri minore raportate de clientii nostri. Va multumim pentru feedback-ul oferit!
+
+### 2.12.3 
+* [UrgentCargus] La functionalitatea de "Marcheaza comanda Complete automat" am adaugat si statusul de Rambursat.
+* [DPD - AWB] Inserarea judetului se facea eronat din detaliile de facturare in loc de cele de livrare.
+* [Livrare] Am reparat o problema cu selectia Oraselor si Judetelor in pagina de Cart.
+* [Livrare - DPD & Nemo & Sameday] Am rezolvat o problema cu rambursul comenzii in cazul in care plata nu era COD.
+* Suport pentru WooCommerce 5.3.0
+
+### 2.12.1 
+* [Sameday] Am rezolvat problema afisarii easybox-urilor.
+
+### 2.12.0 
+* [OptimusCourier] Am adaugat firma de curierat OptimusCourier.
+* [Sameday] Am adaugat functionalitatea de Lockers/Easy Box pentru clientii premium.
+* Am adaugat posibilitatea de a selecta in checkout persoana fizica sau persoana juridica, si campuri aferente acestora.
+* Am reparat multe bug-uri minore raportate de clientii nostri. Va multumim pentru feedback-ul oferit!
+
+### 2.11.2 
+* [Bookurier] Am reparat o problema care nu permitea activarea Bookurier.
+* [DPD] Am reparat o problema la calcularea tarifiul de livrare in cazul in care metoda de plata este COD.
+
+### 2.11.0 
+* [Nemo] Am adaugat firma de curierat Nemo Express.
+* [AWB] Am dezactivat cache-ul HTTP pentru stergerea AWB-urilor, deoarece anumiti utilizatori intampinau probleme cu stergerea AWB-urilor.
+
+### 2.10.0 
+* [Memex] Am adaugat firma de curierat Memex.
+* [AWB] Am adaugat posibilitatea de a vedea numarul de AWB si a accessa link-ul de tracking din comanda.
+* [DPD - AWB] Posibilitatea de a schimba plata transportului la Expeditor sau Destinatar.
+* [GLS - AWB] Posibilitatea de a activa serviciul SM2 (Preadvice Service).
+
+### 2.9.1 
+* [Sameday -  AWB] Posibilitatea de a adauga mai multe pachete la o expeditie cu Sameday.
+* Am imbunatatit metoda de conectare a metodelor de shipping la WooCommerce.
+
+### 2.9.0 
+* [DPD - AWB] Am rezolvat un bug la generarea de AWB-uri, uneori localitatea era ignorata.
+* Am adaugat functionalitatea de a trimite email cu AWB-ul manual din fereastra de comanda, sectiunea Actiuni Comanda (Order actions), dar si trimiterea in bulk din panoul de comenzi.
+* Am crescut prioritatea CRON-ului pentru a rezolva problemele unor utilizatori legate de sincronizarea statusului AWB-ului.
+* Am blocat anumite rute din plugin pentru a nu putea fi accesate din extern - acestea nu creau o problema de securitate deoarece oricum aceste accesari nu puteau interactiona deloc cu site-ul dvs.
+* Am introdus un meniu care va ajuta sa aranjati metodele de livrare din plugin in cazul in care aveti mai mult de 2 metode de livrare customizate in afara celor din WooCommerce.
+* Am reparat multiple buguri marunte si am imbunatatit performanta modulului.
+
+### 2.8.5 
+* Am reparat un bug la cautarea oraselor in checkout.
+* Am reparat o eroare la dezinstalarea pluginului, in cazul in care era folosit DPD sau Sameday.
+* [UrgentCargus - AWB] Am schimbat link-ul de tracking trimis pe email la generare in cazul in care se opteaza pentru aceasta optiune, pentru a folosi noua platforma de tracking de la Cargus.
+
+### 2.8.4 
+* [Bookurier - AWB] Am adaugat campul de judet in generarea de AWB.
+
+### 2.8.2 
+* Am adaugat posibilitatea de a cauta comenzile din WooCommerce dupa numarul de AWB generat.
+
+### 2.8.1 
+* Am reparat o eroare care nu permitea completarea orasului in checkout.
+
+### 2.8.0 
+* [Bookurier] Am integrat si firma de curierat Bookurier.
+* [Sameday - AWB] Am reparat o problema la trimiterea de mailuri catre clienti.
+* [DPD - AWB] Am reparat mai multe probleme legate de generarea de AWB si trimiterea de email-uri de notificare AWB.
+* Am adaugat id-ul de comanda pe actiunea 'safealternative_awb_generated'. Ordinea parametrilor este: $nume_curier, $numar_awb, $order_id.
+* Am adaugat actiunea 'safealternative_awb_deleted' atunci cand un AWB este anulat. Ordinea parametrilor este: $nume_curier, $order_id.
+* Am imbunatatit JavaScript-ul din checkout pentru o executie mai buna, si a intampina mai putine probleme.
+* Am reparat multe bug-uri minore raportate de clientii nostri. Va multumim pentru feedback-ul oferit!
+
+### 2.7.4 
+* [FanCourier - AWB] Am reparat o eroare generata in fundal pe anumite configuratii de server.
+* Am rescris metoda de Bulk Download AWB.
+
+### 2.7.0 - 2.7.3 
+* [Sameday - Livrare] Posibilitatea de a folosi tariful din contract pentru calcularea transportului.
+* [DPD - Livrare] Posibilitatea de a folosi tariful din contract pentru calcularea transportului.
+* Am reparat mai multe bug-uri minore ale pluginului.
+
+### 2.6.4 
+* [Sameday - AWB] Am reparat functionalitatile "Generare AWB automata" si "Marcheaza comanda Complete automat".
+* [DPD - AWB] Am reparat functionalitatile "Generare AWB automata" si "Marcheaza comanda Complete automat".
+* [WooCommerce] Am actualizat codul pentru a functiona si cu ultima versiune de WooCommerce.
+
+### 2.6.3 
+* [UrgentCargus - AWB] Am reparat o eroare la actualizarea statusurilor AWB-urilor.
+
+### 2.6.2 
+* [FanCourier - AWB] Posibilitatea de a downloada AWB-uri generate pentru alt punct de ridicare decat cel implicit.
+
+### 2.6.1 
+* [UrgentCargus - AWB] Am reparat o problema de generare, si am optimizat performanta modulului.
+
+### 2.6.0 
+* [GLS - AWB] Am reparat multiple probleme din bucata de GLS. De asemenea am adaugat posibilitatea de a genera AWB-uri cu mai multe colete.
+
+### 2.5.7 
+* [DPD - AWB] Posibilitatea de a introduce un mesaj pe AWB-ul generat.
+* [DPD - AWB] Am reparat o problema la sincronizarea statusurilor AWB-urilor.
+* Compatibilitate cu ultima versiune de WooCommerce.
+
+### 2.5.6 
+* [Sameday] Am adaugat si firma de curierat Sameday.
+
+### 2.4.5 
+* [UrgentCargus & DPD] Posibilitatea de a genera AWB-uri ca si Manager Magazin.
+
+### 2.4.4 
+* [DPD - AWB] Am adaugat selectia Serviciului in functie de adresa destinatarului si posibilitatea de a selecta un ID de serviciu implicit.
+
+### 2.4.1 
+* [Livrare] Am reparat o problema la calcularea tarifiul de livrare pentru a lua in calcul taxa fiecarui produs.
+* [DPD] Am reparat eroarea: "Object of class stdClass could not be converted to string".
+
+### 2.4.0 
+* [DPD] Am adaugat si firma de curierat DPD.
+
+### 2.3.21 
+* [FanCourier - Livrare] Am adaugat posibilitatea de a configura prag gratis pentru CollectPoint.
+
+### 2.3.20 
+* Am reparat o problema la aratarea in checkout a oraselor in functie de judet.
+
+### 2.3.19 
+* Am reparat o problema la activarea pluginului.
+
+### 2.3.18 
+* Am adaugat suport pentru WP Multisite. Optiunea se afla in Setari generale, in sectiunea Extra.
+
+### 2.3.17 
+* [GLS] Am reparat codurile postale pentru Bucuresti pentru a avea 6 numere.
+* Am adaugat al 4-lea argument pentru filtrele "safealternative_overwrite_cargus_shipping" si "safealternative_overwrite_fan_shipping", aceasta variabila reprezinta orasul destinatar.
+
+### 2.3.16 
+* [FanCourier] Am reparat o problema la autentificarea clientilor in platforma SelfAWB.
+
+### 2.3.15 
+* Am reparat o problema la generarea bulk a AWB-urilor.
+
+### 2.3.14 
+* Am reparat o problema la descarcarea bulk a AWB-urilor.
+
+### 2.3.13 
+* [GLS - AWB] Posibilitatea de a adauga numarul de comanda pe AWB in observatii.
+* [UrgentCargus - AWB] Posibilitatea de a seta Lungime, Latime, Inaltime si Greutate standard pentru colete.
+
+### 2.3.12 - 2.3.10  
+* [UrgentCargus - AWB] Am reparat multiple probleme ce apareau la generarea AWB-urilor cu plicuri, si AWB-urilor mixte - ce contin si plicuri si colete.
+
+### 2.3.9 
+* [UrgentCargus - AWB] Am adaugat Tipurile de serviciu: Economic Standard, Standard Plus si Palet Standard si in generarea manuala de AWB.
+
+### 2.3.8 
+* [GLS - AWB] Posibilitatea de a genera AWB-uri internationale.
+* [UrgentCargus - AWB] Am adaugat Tipurile de serviciu: Economic Standard, Standard Plus si Palet Standard.
+
+### 2.3.7 
+* [GLS - AWB] Am reparat o eroare ce aparea la statusul 'Inregistrat'.
+* [AWB] Am rezolvat o problema care aparea in cazuri extrem de rare atunci cand incercati sa stergeti un AWB deja generat.
+* [AWB] Acum mail-ul care este trimis la clienti in cazul in care optati pentru aceasta optiune la generarea de AWB, pretul produselor va include si taxele aditionale configurate per produs.
+
+### 2.3.6 
+* [AWB] Functia de Descarcare AWB va deschide o noua fereastra cu PDF-ul in browser. Functionalitatea 'Descarca AWB' in bulk ramane neschimbata.
+
+### 2.3.5 
+* [GLS - AWB] In cazul in care comanda este facuta pe companie, ea va fi trecuta ca si destinatar in loc de Nume si Prenume - pe prima linie a AWB-ului.
+
+### 2.3.4 
+* [GLS - AWB] Am reparat o problema la afisarea statusurilor.
+
+### 2.3.3 
+* [GLS - AWB] Am reparat o problema la generarea automata a AWB-urilor.
+
+### 2.3.2 
+* [AWB] Am adaugat posibilitatea de a marca automat comenzile cu statusul Complete atunci cand curierii marcheaza AWB-urile cu status livrat. 
+
+### 2.3.1 
+* [AWB] Am adaugat posibilitatea de a genera automat AWB-uri pentru comenzile noi, care trec in statusul de Processing. 
+
+### 2.3.0 
+* [AWB] Am adaugat posibilitatea de a sterge AWB generate.
+* [AWB] Erorile de generare ale AWB-urilor ofera mai multe detalii.
+* [AWB] Am introdus un buton de resetare a template-urilor de email catre client.
+* Am reparat alte bug-uri minore care afectau modul de functionare a plugin-ului.
+* Am optimizat pentru viteza anumite portiuni ale plugin-ului. Stim ca nu va place sa asteptati, nici noua!
+
+### 2.2.17 
+* Posibilitatea de a folosi expresiile [nr_comanda], [data_comanda] si [nr_awb] in subiectul email-ului.
+
+### 2.2.16 
+* [FanCourier - Livrare] Am adaugat posibilitatea de a avea un pret fix pentru Collect Point.
+
+### 2.2.15 
+* [UrgentCargus - AWB] Am reparat o eroare de validare legata de functionalitatea de trimitere colete multiple. 
+
+### 2.2.14 
+* [UrgentCargus - AWB] Am implementat posibilitatea de a trimite colete multiple pentru fiecare comanda. 
+
+### 2.2.13 
+* [UrgentCargus - AWB] Am implementat printarea noului tip de AWB folosit de cei de la UrgentCargus.
+* [UrgentCargus - AWB] Am reparat greutatea care apare per colet sau plic in noul model de AWB.
+
+### 2.2.12 
+* Functia de download in bulk implementata in versiunea 2.2.10, nu v-a mai deschide ferestre noi pentru fiecare comanda selectata.
+
+### 2.2.11  
+* [GLS - AWB] Am reparat o problema care nu permitea trimiterea email-urilor catre clienti la generare de AWB.
+* Am adaugat posibilitatea de a edita template-ul de email trimis catre clienti la generarea de AWB-uri.
+
+### 2.2.10 
+* Am adaugat posibilitatea de a downloada in bulk multiple AWB-uri. 
+
+### 2.2.9 
+* [FanCourier - Livrare] Am reparat o problema la calcularea pretului de livrare pentru anumite localitati din judetul Harghita.
+
+### 2.2.8 
+* [GLS - AWB] Implementarea serviciilor FDS si FDS+FSS.
+
+### 2.2.6 
+* [FanCourier - AWB] Am reparat reparat calculul greutatii la generarea de AWB pentru a corespunde cu pretul obtinut in checkout.
+
+### 2.2.5 
+* [GLS - AWB] Am reparat cateva probleme la generare si la cautarea de coduri ZIP.
+* [FanCourier - Livrare] Am adaugat setarea cotei de TVA.
+
+### 2.2.4 
+* [FanCourier - AWB] Optiune de a configura dimensiuni si greutate standard pentru fiecare comanda.
+
+### 2.2.3 
+* Judetul, orasul si codul postal introduse pe pagina de cos sunt acum precompletate in pagina de checkout. 
+
+### 2.2.2 
+* [GLS - AWB] Am reparat o problema legata de expeditori multipli.
+
+### 2.2.1 
+* [UrgentCargus - AWB] Am refacut modul in care functioneaza plugin-ul pentru a fi in conformitate cu schimbarile API UrgentCargus.
+* [FanCourier - AWB] Tiparire AWB pe diferite formate de hartie A4,A5 si A6.
+* [FanCourier - AWB] Optiuni de livrare: oPOD si ePOD.
+
+### 2.2.0 
+* [Livrare] Am reparat o problema in checkout care nu permitea utilizatorului sa selecteze metoda de livrare in anumite conditii.
+
+### 2.1.16 
+* [FanCourier - Livrare] Am reparat o problema care nu permitea afisarea tarifului in pagina de checkout atunci cand nu exista in setari o valoare completata in campul Tarif maxim livrare.
+
+### 2.1.15 
+* [FanCourier - AWB] Am reparat o problema care nu permitea generarea AWB-urilor customizate.
+
+### 2.1.14 
+* [General - AWB] Am adaugat campul "Adresa de email expeditor AWB" pe care il gasiti in SafeAlternative > Setari Generale > Sectiunea Extra. Descriere: "Adresa de email de la care vor fi trimise email-urile cu AWB-ul generat aferent unei comenzi atunci când se optează pentru opțiunea "Trimite mail la generare". În cazul în care acest câmp este gol, se va folosi adresa de email a administratorului site-ului."
+
+### 2.1.13 
+* Am centralizat textul (string-urile) plugin-ului intr-un text-domain, putand fi traduse cu plugin-uri precum LocoTranslate.
+
+### 2.1.12  
+* [Livrare] Am adaugat tariful implicit pentru toate firmele de curierat din plugin-ul nostru. Descriere: "Tariful implicit pentru metoda de livrare, pentru a arata o suma atunci cand nu este introdusa adresa de livrare. Scrieti 0 sau nu completati acest camp pentru a arata tariful numai dupa completarea adresei."
+
+### 2.1.11 
+* [GLS - AWB] Am adaugat posibilitatea de a salva expeditori multipli.
+* [FanCourier - AWB] Am adaugat posibilitatea de a genera AWB pentru oricare din punctele de lucru asociate contului FanCourier.
+
+### 2.1.10 
+* Am reparat o problema care impiedica baza de date a anumitor utilizatori sa salveze lista cu orase disponibile pentru livrare.
+
+### 2.1.9 
+* [FanCourier - AWB] Am implementat optiuni pentru Descrie continut in AWB [ Nu, Denumire produs, SKU, Denumire+SKU ].
+* [GLS - AWB] Am implementat optiuni pentru Descrie continut in AWB [ Nu, Denumire produs, SKU ].
+* [GLS - AWB] Am reparat o problema care nu permitea cautarea adreselor cu diacritice pentru a gasi codul ZIP.
+
+### 2.1.8 
+* [FanCourier - Livrare] Am implementat posibilitatea livrarii la un anumit CollectPoint pentru utilizatorii cu cont premium.
+* [FanCourier - AWB] Am implementat posibilitatea livrarii la un anumit CollectPoint pentru utilizatorii cu cont premium.
+
+### 2.1.7 
+* Am reparat o eroare care era generata de modul in care plugin-ul nostru se actualiza, si crea probleme pentru anumiti utilizatori.
+* [FanCourier - AWB] Am reparat o notificare de tip Warning care era generat de modulul nostru de generare de AWB stict pe versiunea de PHP 7.4.
+
+### 2.1.6 
+* [UrgentCargus - Livrare] Am reparat un bug care facea sa nu fie luat in calcul Tipul de serviciu 'Business Partener' pentru a aplica discount-ul.
+* [UrgentCargus - AWB] Am adaugat posibilitatea de a printa AWB-urile cu Tipul 'Standard' si 'Business Partener'. Aceasta setare o puteti gasi sub meniul SafeAlternative > Cargus - AWB.
+* [UrgentCargus - AWB] Am curatat putin codul pentru a face mai rapida generarea de AWB-uri, in special la generarea manuala a AWB-urilor.
+ 
+### 2.1.5 
+* Am adaugat changelog-ul pentru a vedea mai usor care sunt schimbarile in plugin.
+* Am adaugat in sectiunea de module alaturi de plugin-ul nostru link-uri catre pagina de configurare a plugin-ului, si pagina de Tichete pentru a raporta probleme si a cere ajutor mai rapid.
+* Am aranjat interfetele de printare de AWB pentru a fi mai asemanatoare una cu cealalta.
+* [UrgentCargus - AWB] Am reparat un bug care facea ca ID-ul de Tarif sa nu fie luat in calcul in anumite circumstante.
+
+### 2.1.4 & 2.1.3 
+* [UrgentCargus - AWB] Am adaugat metoda de a putea printa AWB-urile in mai multe formate. A4 si 10x14, totodata am implementat si o metoda de a printa o singura copie a AWB-ului.
+
+### 2.1.2 
+* Am setat ca versiunea minima de PHP pentru acest plugin sa fie 7.1. Din motive de viteza si usurarea procesului de development.
+
+### 2.1.1 
+* Am reparat un bug la instalarea pluginului care impiedica anumiti utilizatori sa downloadeze lista de orase UrgentCargus si FanCourier pentru autocomplete-ul sub forma de lista din Checkout.
+
+### 2.1.0 
+* Am schimbat tot sistemul de update (actualizare) al plugin-ului.
+* Acum plugin-ul este mai mic in dimensiune si mult mai rapid.
+* Mici optimizari la tabelele din baza de date folosite de plugin-ul nostru.
+* Functia de Cauta Cod Postal din GLS a fost imbunatatita.
+* Am imbunatatit JavaScript-ul responsabil pentru actualizarea calculelor tarifare din Checkout pentru UrgentCargus si FanCourier.
+* Am luat in considerare ruta de admin (/wp-admin/) dinamica atunci cand incercati sa configurati plugin-ul, pentru a nu va redirectiona gresit.

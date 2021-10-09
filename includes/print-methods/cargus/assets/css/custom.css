@@ -1,0 +1,37 @@
+.urgentNotice .dashicons {
+    vertical-align: middle;
+    font-size: 17px;
+}
+.urgentNotice {
+    font-size: 12px;
+    line-height: 1.85;
+    margin-left: 5px;
+}
+.urgentNoticeWrapper {
+    padding: 3px;
+    background-color: #efefef;
+    border-radius: 3px;
+    margin: 5px auto 0;
+    width: 96%;
+    border: 1px solid #e5e5e5;
+}
+.Urgent_Cargus_AWB .button {
+    width: 100%;
+    box-shadow: 0 2px 4px #ccc;
+}
+.Urgent_Cargus_AWB .generateBtn {
+    background-color: white !important;
+    text-align: center;
+    height: 33px;
+}
+.Urgent_Cargus_AWB .generateBtn img {
+    vertical-align: middle;
+    height: 95% !important;
+    object-fit: contain;
+    width: 100%;
+    margin: 0;
+    image-rendering: -webkit-optimize-contrast;
+}
+.Urgent_Cargus_AWB .downloadBtn {
+    text-align: center;
+}
