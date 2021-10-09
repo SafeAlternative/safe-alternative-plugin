@@ -7,11 +7,11 @@ if (!defined('ABSPATH')) exit;
 add_filter('cron_schedules', function ($schedules) {
     $schedules['twicedaily_safealternative'] = array(
         'interval' => 12 * HOUR_IN_SECONDS,
-        'display' => __('Twice Daily CurieRo')
+        'display' => __('Twice Daily Safealternative')
     );
     $schedules['safealternative_memex_daily_pickup'] = array(
         'interval' => 24 * HOUR_IN_SECONDS,
-        'display' => __('Memex Pickup CurieRo')
+        'display' => __('Memex Pickup Safealternative')
     );
     return $schedules;
 }, 1000);

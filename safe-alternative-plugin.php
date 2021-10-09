@@ -20,8 +20,8 @@ if (!defined('ABSPATH')) exit;
 define('SAFEALTERNATIVE_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('SAFEALTERNATIVE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SAFEALTERNATIVE_PLUGIN_FILE', __FILE__);
-define('SAFEALTERNATIVE_API_VERSION_JSON', 'https://api.safe-alternative.ro/plugin/safealternative-plugin.json');
-define('SAFEALTERNATIVE_API_URL', 'https://api.safe-alternative.ro');
+define('SAFEALTERNATIVE_API_VERSION_JSON', 'http://proiect.curiersigur.ro/api/plugin/safealternative-plugin.json');
+define('SAFEALTERNATIVE_API_URL', 'http://proiect.curiersigur.ro/api/');
 define('SAFEALTERNATIVE_DB_VER', '1.1.2');
 
 // Mandatory
