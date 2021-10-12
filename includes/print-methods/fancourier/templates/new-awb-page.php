@@ -41,7 +41,11 @@ function format_field_labels($k)
                         <?php } ?>
                     </select>
                 </td>
-            </tr>            
+            </tr>    
+            
+          
+
+
         <?php
             unset($_POST['awb']['epod_opod']);
             foreach($_POST['awb'] as $k => $v) {

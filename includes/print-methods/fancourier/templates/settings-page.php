@@ -49,6 +49,7 @@
         ?>
         <table>
 
+        <input type="hidden" name="token" value="<?= esc_attr( get_option('token') ); ?>" />
             <tr>
                 <th align="left">Utilizator SelfAWB:</th>
                 <td><input type="text" name="fan_user" value="<?= esc_attr( get_option('fan_user') ); ?>" size="50" placeholder="Numele utilizatorului FanCourier SelfAWB"/></td>
@@ -315,18 +316,35 @@
 
 <script>
     jQuery(($) => {
-        const url = "<?=SAFEALTERNATIVE_API_URL?>/api/";
+        const url = "<?=SAFEALTERNATIVE_API_URL?>fan/";
         
         $('button[name="validate_fan"]').on('click', function(e){
             $.ajax({
                 type: 'POST',
-                url: url+"validateFanAuth",
+                url: url+"validateAuth",
+                headers: {
+                    Authorization: 'Bearer '+$('input[name="token"]').val(),
+                },
                 data: {
-                    fan_user: $('input[name="fan_user"]').val(),
-                    fan_pass: $('input[name="fan_password"]').val(),
-                    fan_id: $('input[name="fan_clientID"]').val(),
+                    username: $('input[name="fan_user"]').val(),
+                    user_pass: $('input[name="fan_password"]').val(),
+                    client_id: $('input[name="fan_clientID"]').val(),
+                    
                 },
                 dataType: "json",
+
+                statusCode: {
+                    401: function (response) {
+                        $('.responseHereFan').text('Autentificare esuata.').css('color', '#f44336');
+                    },
+                    400: function (response) {
+                        $('.responseHereFan').text('Autentificare esuata.').css('color', '#f44336');   
+                    },
+
+                    404: function (response) {
+                        $('.responseHereFan').text('Autentificare esuata.').css('color', '#f44336');                  }
+                },
+
                 success: function(response) { 
                     if(response['success']){
                         $('.responseHereFan').text('Autentificare reusita.').css('color', '#34a934');

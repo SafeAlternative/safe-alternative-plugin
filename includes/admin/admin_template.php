@@ -79,7 +79,7 @@
             <tr>
                 <th align="left" class="responseHereApi"></th>
                 <td align="right">
-                    <button type="button" name="validate_api" class="button">Valideaza credentialele SafeAlternative</button>
+                    <button type="button" name="validate_api" class="button">Valideaza credentialele Safe Alternative</button>
                 </td>
             </tr>
 
@@ -474,6 +474,7 @@
             </tr>
 
             <input type="hidden" name="auth_validity" value="<?= esc_attr( get_option('auth_validity') ); ?>">
+            <input type="hidden" name="token" value="<?= esc_attr( get_option('token') ); ?>">
 
             <tr>
                 <td colspan="2"><?php submit_button('Salveaza modificarile'); ?></td>
@@ -488,7 +489,7 @@
 
 <script>
     jQuery(($) => {
-        const url = "<?=SAFEALTERNATIVE_API_URL?>/api/";
+        const url = "<?=SAFEALTERNATIVE_API_URL?>";
 
         $('form').on('submit', (e) => {
             $('button[name="validate_api"]').click();
@@ -513,19 +514,20 @@
             let user_field = $('input[name="user_safealternative"]'),
                 pass_field = $('input[name="password_safealternative"]'),
                 validity_field = $('input[name="auth_validity"]'),
+                token_field = $('input[name="token"]'),
                 responseHereApi = $('.responseHereApi');
 
             $.ajax({
                 type: 'POST',
-                url: url+"validateSafealternativeAuth",
+                url: url+"login",
                 async: false,
                 data: {
-                    api_user: user_field.val(),
-                    api_pass: pass_field.val(),
+                    username: user_field.val(),
+                    password: pass_field.val(),
                 },
-                dataType: "text",
+                dataType: "json",
                 success: function(data) { 
-                    let response = JSON.parse(data);
+                    let response = data;
                     responseHereApi.text(response['message']);
 
                     if(response['success']){
@@ -533,19 +535,16 @@
                         user_field.attr('style', '');
                         pass_field.attr('style', '');
                         validity_field.val(1);
+                        token_field.val(response['token']);
 
                         $('#submit').click();
                     } else {
-                        responseHereApi.css('color', '#f44336');
+                        responseHereApi.css('color', '#f44336');                      
+                        pass_field.attr('style', '');
+                        user_field.css('box-shadow', '0 0 2px 2px rgba(228, 7, 7, 0.45)');
                         validity_field.val(0);
-
-                        if(~response['message'].indexOf('Parola')){
-                            user_field.attr('style', '');
-                            pass_field.css('box-shadow', '0 0 2px 2px rgba(228, 7, 7, 0.45)');
-                        } else {
-                            pass_field.attr('style', '');
-                            user_field.css('box-shadow', '0 0 2px 2px rgba(228, 7, 7, 0.45)');
-                        }
+                        token_field.val('NOTOKEN');
+                        $('#submit').click();
                     }
                 }
             });

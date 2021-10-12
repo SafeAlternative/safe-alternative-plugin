@@ -343,9 +343,9 @@ class FanGenereazaAWB
         
         $packing = substr($packing, 0, -1);
         
-        $courier         = new SafealternativeFanClass();
-        $response        = $courier->callMethod("getServices/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, $json_parameters = '', 'POST');
-        $servicesListFan = json_decode($response['message']);
+        //$courier         = new SafealternativeFanClass();
+        //$response        = $courier->callMethod("getServices/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, $json_parameters = '', 'POST');
+        //$servicesListFan = json_decode($response['message']);
 
         if (!isset($_POST['generate_awb'])) { 
 
@@ -371,14 +371,14 @@ class FanGenereazaAWB
                 'greutate' => ceil($weight),
                 'plata_expeditie' => $plata_transport,
                 'ramburs' => $ramburs,
-                'plata_ramburs' => $plata_ramburs,
+                'plata_ramburs_la' => $plata_ramburs,
                 'nume_destinatar' => $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name(),
                 'companie' => $order->get_shipping_company(),
                 'telefon' => $order->get_billing_phone(),
                 'mail' => $order->get_billing_email(),
                 'judet' => $district,
                 'localitate' => $city,
-                'adresa' => $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2(),
+                'strada' => $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2(),
                 'adresa_collectpoint' => implode('', get_post_meta($order->get_id(), 'safealternative_fan_collectpoint')),
                 'cod_postal' => $postcode,
                 'val_decl' => $val_decl,
@@ -405,9 +405,13 @@ class FanGenereazaAWB
             include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/shipping-methods/fancourier/SafealternativeFanCalcApi.php';
         }
         
-        $fan_obj = new SafealternativeFanCalcApi($user, $password);
+        $fan_obj = new SafealternativeFanCalcApi($user, $password, $clientID);
         $clientIds = $fan_obj->getClientIds();
 
+        $servicesListFan = $fan_obj->getServices();
+
+        
+        
         include_once(plugin_dir_path(__FILE__) . '/templates/new-awb-page.php');
     }
 
@@ -723,14 +727,14 @@ class FanGenereazaAWB
                     'greutate' => ceil($weight),
                     'plata_expeditie' => $plata_transport,
                     'ramburs' => $ramburs,
-                    'plata_ramburs' => $plata_ramburs,
+                    'plata_ramburs_la' => $plata_ramburs,
                     'nume_destinatar' => $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name(),
                     'companie' => $order->get_shipping_company(),
                     'telefon' => $order->get_billing_phone(),
                     'mail' => $order->get_billing_email(),
                     'judet' => $district,
                     'localitate' => $city,
-                    'adresa' => $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2(),
+                    'strada' => $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2(),
                     'adresa_collectpoint' => implode('', get_post_meta($order->get_id(), 'safealternative_fan_collectpoint')),
                     'cod_postal' => $postcode,
                     'val_decl' => $val_decl,

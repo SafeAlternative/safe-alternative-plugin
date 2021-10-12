@@ -81,12 +81,14 @@ add_action('admin_init', function () {
     add_option('user_safealternative', '');
     add_option('password_safealternative', '');
     add_option('auth_validity', '0');
+    add_option('token', '');
     add_option('enable_checkout_city_select', '0');
     add_option('courier_email_from', '');
     add_option('safealternative_is_multisite', '0');
     register_setting('safealternative_settings', 'user_safealternative');
     register_setting('safealternative_settings', 'password_safealternative');
     register_setting('safealternative_settings', 'auth_validity');
+    register_setting('safealternative_settings', 'token');
     register_setting('safealternative_settings', 'enable_checkout_city_select');
     register_setting('safealternative_settings', 'courier_email_from');
     register_setting('safealternative_settings', 'safealternative_is_multisite');

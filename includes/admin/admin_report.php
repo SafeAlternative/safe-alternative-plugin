@@ -186,9 +186,9 @@ function CR_send_report($ignore_die = false)
 // Send initial report after the first authentication
 add_action('admin_init', function () {
     if ((get_option('auth_validity', '0') == '1') && (get_option('safealternative_initial_user_report', '0') == '0')) {
-        CR_send_report(true);
-        update_option('safealternative_initial_user_report', '1');
-        wp_safe_redirect(wp_get_referer(), 302);
+        //CR_send_report(true);
+        //update_option('safealternative_initial_user_report', '1');
+        //wp_safe_redirect(wp_get_referer(), 302);
         return true;
     }
 }, 100);

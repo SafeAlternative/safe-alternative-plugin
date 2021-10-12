@@ -11,9 +11,8 @@ include_once($dir . 'courier.class.php');
 $awb_details = $_POST['awb'];
 $awb_details['domain'] = site_url();
 
-$api_user      = rawurlencode(get_option('user_safealternative'));
-$api_pass      = rawurlencode(get_option('password_safealternative'));
-$user          = rawurlencode(get_option('fan_user'));
+$token         = get_option('token');
+$username      = rawurlencode(get_option('fan_user'));
 $password      = rawurlencode(get_option('fan_password'));
 $clientID      = $awb_details['clientId'];
 $trimite_mail  = get_option('fan_trimite_mail');
@@ -23,17 +22,22 @@ unset($awb_details['clientId']);
 if (strlen($awb_details['judet']) <= 2)
     $awb_details['judet'] = safealternative_get_counties_list($awb_details['judet']);
 
-$parameters      = $awb_details;
-$json_parameters = json_encode($parameters);
+
+$awb_details['username'] = $username;
+$awb_details['client_id'] = $clientID;
+$awb_details['user_pass'] = $password;
+$awb_details['token'] = $token;
+    
+    
 
 $courier  = new SafealternativeFanClass();
-$response = $courier->callMethod("generateAwb/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, $json_parameters, 'POST');
+$response = $courier->callMethod("generateAwb", $awb_details, 'POST');
 
 if ($response['status'] == 200) {
     $id = json_decode($response['message']);
     if (is_numeric($id)) {
         if ($trimite_mail == 'da') {
-            FanGenereazaAWB::send_mails($_GET['order_id'], $id, $parameters['mail']);
+            FanGenereazaAWB::send_mails($_GET['order_id'], $id, $awb_details['mail']);
         } //$trimite_mail == 'da'
 
         update_post_meta($_GET['order_id'], 'awb_fan', $id);
@@ -45,14 +49,14 @@ if ($response['status'] == 200) {
 
         do_action('safealternative_awb_generated', 'FanCourier', $id, $_GET['order_id']);
 
-        $account_status_response = $courier->callMethod("newAccountStatus/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, '', 'POST');
-        $account_status = json_decode($account_status_response['message']);
+       // $account_status_response = $courier->callMethod("newAccountStatus/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, '', 'POST');
+       // $account_status = json_decode($account_status_response['message']);
 
-        if ($account_status->show_message) {
-            set_transient('fan_account_status', $account_status->message, MONTH_IN_SECONDS);
-        } else {
-            delete_transient('fan_account_status');
-        }
+       // if ($account_status->show_message) {
+       //     set_transient('fan_account_status', $account_status->message, MONTH_IN_SECONDS);
+      //  } else {
+      //      delete_transient('fan_account_status');
+      //  }
 
         header('Location: ' . safealternative_redirect_url() . 'post.php?post=' . $_GET['order_id'] . '&action=edit');
         exit;
