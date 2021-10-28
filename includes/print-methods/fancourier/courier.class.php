@@ -21,6 +21,7 @@ class SafealternativeFanClass
         $parameters_json = json_encode($parameters);
         
         $url = $this->api_url . $url;
+        //var_dump($parameters);exit;
 
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $parameters_json);
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $verb);
@@ -34,6 +35,7 @@ class SafealternativeFanClass
         $result            = curl_exec($this->curl);
         $header            = curl_getinfo($this->curl);
 
+        //($result);exit;
         $result=json_decode($result);
         $output['success'] = $result->success;
         $output['message'] = $result->message;    

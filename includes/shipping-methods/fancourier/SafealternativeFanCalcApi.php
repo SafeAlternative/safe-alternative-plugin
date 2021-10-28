@@ -80,4 +80,31 @@ class SafealternativeFanCalcApi extends SafealternativeFanClient
 		$response = $this->callCourierMethod('get_account_clients_integrat.php', 'POST', $parameters);
 		return json_decode($response['message']);
 	}
+
+
+   ////////////////////////////////////////////////////////////
+    // PRINTARE AWB ////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    function printAwb($params) {
+
+
+		$parameters = $params + array(
+			'username' => $this->USERNAME,
+			'user_pass' => $this->PASSWORD,
+			'client_id' => $this->CLIENTID
+		);
+
+        $html_pdf   = $parameters['html_pdf'];
+        $api_url = 'view_awb_integrat_pdf.php';
+        if ($html_pdf == 'html') {
+            $api_url = 'view_awb_integrat.php';
+        }
+
+        
+		$response = $this->callCourierMethod($api_url, 'POST', $parameters);
+		return $response;      
+        
+    }
+
+
 }
