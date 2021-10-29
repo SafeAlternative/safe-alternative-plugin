@@ -1,7 +1,7 @@
 <?php
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'courier.class.php');
+include_once(plugin_dir_path(__FILE__) .'/courierFanSafe.class.php');
+include_once(plugin_dir_path(__FILE__) .'/courierFan.class.php');
 
 class FanGenereazaAWB
 {
@@ -161,12 +161,10 @@ class FanGenereazaAWB
 
         $fan_usr = get_option('fan_user');
         if (empty($fan_usr)) {
-            echo '<div class="wrap"><h1>SafeAlternative FanCourier AWB</h2><br><h2>Plugin-ul SafeAlternative FanCourier AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=fan-plugin-setting').'"> aici</a> pentru a il configura.</div>';
+            echo '<div class="wrap"><h1>Safe Alternative Fan Courier AWB</h2><br><h2>Plugin-ul Safe Alternative Fan Courier AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=fan-plugin-setting').'"> aici</a> pentru a il configura.</div>';
             exit;
         }
 
-        $api_user      = rawurlencode(get_option('user_safealternative'));
-        $api_pass      = rawurlencode(get_option('password_safealternative'));
         $user          = rawurlencode(get_option('fan_user'));
         $password      = rawurlencode(get_option('fan_password'));
         $clientID      = rawurlencode(get_option('fan_clientID'));
@@ -251,7 +249,8 @@ class FanGenereazaAWB
             }
 
             $_product = $item->get_product();
-            
+            $heightList = array();
+            $lengthList = array();
             if ($_product && !$_product->is_virtual()) {
                 $weight += (float) $_product->get_weight() * $item->get_quantity();
                 
@@ -264,8 +263,9 @@ class FanGenereazaAWB
             } //!$_product->is_virtual()
             
         } //$items as $i => $item
-
+        if (count($heightList))
         $height = max($heightList);
+        if (count($lengthList))
         $length = max($lengthList);
         
         if ($height == 0) {
@@ -400,18 +400,13 @@ class FanGenereazaAWB
             $_POST['awb'] = $awb_details;
         }
 
-        // Should fix later in refactoring
-        if (!class_exists('SafealternativeFanCalcApi')) {
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/shipping-methods/fancourier/SafealternativeFanCalcApi.php';
-        }
+
+        $fan_obj = new CourierFan($user, $password, $clientID);
         
-        $fan_obj = new SafealternativeFanCalcApi($user, $password, $clientID);
         $clientIds = $fan_obj->getClientIds();
 
         $servicesListFan = $fan_obj->getServices();
 
-        
-        
         include_once(plugin_dir_path(__FILE__) . '/templates/new-awb-page.php');
     }
 
@@ -545,10 +540,8 @@ class FanGenereazaAWB
                     echo '<div class="notice notice-error"><h2>Plugin-ul SafeAlternative FanCourier AWB nu a fost configurat.</h2><p>Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=fan-plugin-setting').'"> aici</a> pentru a il configura.</p></div>';
                     return;
                 }
-                
-                $api_user        = rawurlencode(get_option('user_safealternative'));
-                $api_pass        = rawurlencode(get_option('password_safealternative'));
-                $user            = rawurlencode(get_option('fan_user'));
+                $token           = get_option('token');
+                $username        = rawurlencode(get_option('fan_user'));
                 $password        = rawurlencode(get_option('fan_password'));
                 $clientID        = rawurlencode(get_option('fan_clientID'));
                 $contact_exp     = get_option('fan_contact_exp');
@@ -753,17 +746,23 @@ class FanGenereazaAWB
                                 
                 $awb_details['domain'] = site_url();    
                 $awb_details = apply_filters('safealternative_awb_details', $awb_details, 'FanCourier', $order);
-                $parameters      = $awb_details;
-                $json_parameters = json_encode($parameters);
+                //$parameters      = $awb_details;
+                //$json_parameters = json_encode($parameters);
+
                 
-                $courier  = new SafealternativeFanClass();
-                $response = $courier->callMethod("generateAwb/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, $json_parameters, 'POST');
+                $awb_details['username'] = $username;
+                $awb_details['client_id'] = $clientID;
+                $awb_details['user_pass'] = $password;
+                $awb_details['token'] = $token;
                 
+                $courier  = new CourierFanSafe();
+                $response = $courier->callMethod("generateAwb", $awb_details, 'POST');
+
                 if ($response['status'] == 200) {
                     $id = json_decode($response['message']);
                     if (is_numeric($id)) {
                         if ($trimite_mail == 'da') {
-                            FanGenereazaAWB::send_mails($order_id, $id, $parameters['mail']);
+                            FanGenereazaAWB::send_mails($order_id, $id, $awb_details['mail']);
                         } //$trimite_mail == 'da'
                         update_post_meta($order_id, 'awb_fan', $id);
                         update_post_meta($order_id, 'awb_fan_client_id', $clientID);
@@ -772,14 +771,14 @@ class FanGenereazaAWB
 
                         do_action( 'safealternative_awb_generated', 'FanCourier', $id, $order_id );
 
-                        $account_status_response = $courier->callMethod("newAccountStatus/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, '', 'POST');
-                        $account_status = json_decode($account_status_response['message']);
+                        //$account_status_response = $courier->callMethod("newAccountStatus/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID, '', 'POST');
+                        //$account_status = json_decode($account_status_response['message']);
 
-                        if($account_status->show_message){
-                            set_transient( 'fan_account_status', $account_status->message, MONTH_IN_SECONDS );
-                        } else {
-                            delete_transient( 'fan_account_status' );
-                        }
+                        //if($account_status->show_message){
+                        //    set_transient( 'fan_account_status', $account_status->message, MONTH_IN_SECONDS );
+                        //} else {
+                        //    delete_transient( 'fan_account_status' );
+                        //}
                     } //is_numeric($id)
                     else {
                         echo "<br>Eroare la raspuns!<br>";
@@ -862,7 +861,7 @@ class FanGenereazaAWB
     }
 }
 
-include_once(plugin_dir_path(__FILE__) .'/fancourier.class.php');
+
 include_once(plugin_dir_path(__FILE__) .'/cron.php');
 
 ////////////////////////////////////////////////////////////////////////////////

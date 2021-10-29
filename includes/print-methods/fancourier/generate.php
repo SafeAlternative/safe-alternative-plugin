@@ -1,12 +1,10 @@
 <?php
-
 define('WP_USE_THEMES', false);
 include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'courier.class.php');
+include_once(plugin_dir_path(__FILE__) .'/courierFanSafe.class.php');
 
 $awb_details = $_POST['awb'];
 $awb_details['domain'] = site_url();
@@ -30,7 +28,7 @@ $awb_details['token'] = $token;
     
     
 
-$courier  = new SafealternativeFanClass();
+$courier  = new CourierFanSafe();
 $response = $courier->callMethod("generateAwb", $awb_details, 'POST');
 
 if ($response['status'] == 200) {

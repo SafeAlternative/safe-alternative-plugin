@@ -4,10 +4,7 @@ include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-// Should fix later in refactoring
-if (!class_exists('SafealternativeFanCalcApi')) {
-    include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/shipping-methods/fancourier/SafealternativeFanCalcApi.php';
-}
+include_once(plugin_dir_path(__FILE__) .'/courierFan.class.php');
 
 $awb        = get_post_meta($_GET['order_id'], 'awb_fan', true);
 
@@ -17,7 +14,7 @@ $client_id  = rawurlencode(get_post_meta($_GET['order_id'], 'awb_fan_client_id',
 $parameters['nr'] = $awb;
 $parameters['page_type'] = get_option('fan_page_type');
 
-$fan_obj = new SafealternativeFanCalcApi($user, $password, $client_id);
+$fan_obj = new CourierFan($user, $password, $client_id);
 $result = $fan_obj->printAwb($parameters);
 
 if ($result['status'] != "200") {

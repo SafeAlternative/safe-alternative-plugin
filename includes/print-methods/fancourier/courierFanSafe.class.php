@@ -1,6 +1,6 @@
 <?php
 
-class SafealternativeFanClass
+class CourierFanSafe
 {
     private $curl;
     public $api_url;

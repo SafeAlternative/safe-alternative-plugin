@@ -25,7 +25,7 @@ function update_fan_courier_awb_status()
                 'AWB' => $awb_fan_for_update
             );
 
-            $obj_fan = new APIFanCourierClass(get_option('fan_user'), get_option('fan_password'), get_option('fan_clientID'));
+            $obj_fan = new CourierFan(get_option('fan_user'), get_option('fan_password'), get_option('fan_clientID'));
             $awb_fan_status_new = $obj_fan->getLatestStatus($parameters);
 
             if(!$awb_fan_status_new) continue;
@@ -44,7 +44,7 @@ function update_fan_courier_awb_status()
     $password = rawurlencode(get_option('fan_password'));
     $clientID = rawurlencode(get_option('fan_clientID'));
 
-    $courier  = new SafealternativeFanClass();
+    $courier  = new CourierFan(get_option('fan_user'), get_option('fan_password'), get_option('fan_clientID'));
 
     $responseOP = $courier->callMethod("getPaymentReport/" . $api_user . "/" . $api_pass . "/" . $user . "/" . $password . "/" . $clientID . "/" . date('d.m.Y'), $json_parameters = '', 'POST');
     $opList     = json_decode($responseOP['message'], true);
