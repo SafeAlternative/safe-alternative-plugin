@@ -129,7 +129,7 @@ add_filter('site_transient_update_plugins', function ($transient) {
         if (!empty($remote) && version_compare($current_version, $remote->version, '<') && version_compare($remote->requires, get_bloginfo('version'), '<')) {
             $res = new stdClass;
             $res->slug = $remote->slug;
-            $res->plugin = 'safealternative-plugin/safealternative.php';
+            $res->plugin = 'safe-alternative-plugin/safe-alternative-plugin.php';
             $res->new_version = $remote->version;
             $res->tested = $remote->tested;
             $res->package = $remote->download_url;
