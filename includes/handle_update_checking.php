@@ -27,7 +27,7 @@ add_filter('plugin_row_meta', function ($plugin_meta, $pluginFile) {
 
         $plugin_meta[] = sprintf(
             '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
-            esc_url(safealternative_redirect_url('plugin-install.php?tab=plugin-information&plugin=safealternative-plugin&TB_iframe=true&width=600&height=550')),
+            esc_url(safealternative_redirect_url('plugin-install.php?tab=plugin-information&plugin=safe-alternative-plugin&TB_iframe=true&width=600&height=550')),
             esc_attr(sprintf(__('More information about %s'), $plugin_info['Name'])),
             esc_attr($plugin_info['Name']),
             __('View details')
@@ -50,7 +50,7 @@ add_filter('plugins_api', function ($res, $action, $args) {
         return false;
 
     // do nothing if it is not our plugin	
-    if ('safealternative-plugin' !== $args->slug)
+    if ('safe-alternative-plugin' !== $args->slug)
         return $res;
 
     if (false == $remote = get_transient('safealternative_update_plugin')) {
@@ -102,10 +102,12 @@ add_filter('plugins_api', function ($res, $action, $args) {
 }, 20, 3);
 
 add_filter('site_transient_update_plugins', function ($transient) {
+    // a fost verificat update
     if (empty($transient->checked)) {
         return $transient;
     }
 
+    // nu avem informatia stocata , atunci o obtinem
     if (false == $remote = get_transient('safealternative_update_plugin')) {
         $remote = wp_remote_get(
             SAFEALTERNATIVE_API_VERSION_JSON,
@@ -122,6 +124,7 @@ add_filter('site_transient_update_plugins', function ($transient) {
         }
     }
 
+    // avem info deja stocata
     if (!empty($remote) && !is_wp_error($remote)) {
         $remote = json_decode($remote['body']);
         $current_version = get_plugin_data(SAFEALTERNATIVE_PLUGIN_FILE)['Version'];

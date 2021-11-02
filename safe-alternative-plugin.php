@@ -4,7 +4,7 @@
  * Plugin Name: Safe Alternative
  * Plugin URI: https://safe-alternative.ro
  * Description: Plugin-ul Safe Alternative All-in-one - Generare AWB si Metode de livrare
- * Version: 2.15.4
+ * Version: 2.15.5
  * Author: Safe Alternative
  * Author URI: https://safe-alternative.ro
  * WC requires at least: 3.0.0
@@ -20,9 +20,9 @@ if (!defined('ABSPATH')) exit;
 define('SAFEALTERNATIVE_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('SAFEALTERNATIVE_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SAFEALTERNATIVE_PLUGIN_FILE', __FILE__);
-define('SAFEALTERNATIVE_API_VERSION_JSON', 'http://127.0.0.1:8000/api/plugin/safe-alternative-plugin.json');
+define('SAFEALTERNATIVE_API_VERSION_JSON', 'http://localhost/safe-alternative/public/api/plugin/safe-alternative-plugin.json');
 //define('SAFEALTERNATIVE_API_URL', 'http://proiect.curiersigur.ro/api/');
-define('SAFEALTERNATIVE_API_URL', 'http://127.0.0.1:8000/api/');
+define('SAFEALTERNATIVE_API_URL', 'http://localhost/safe-alternative/public/api/');
 
 define('SAFEALTERNATIVE_DB_VER', '1.1.2');
 
