@@ -19,9 +19,6 @@ if ( get_option('enable_dpd_print') == '1' ) {
     include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/dpd/initialize.php';
 }
 
-if ( get_option('enable_sameday_print') == '1' ) {
-    include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/sameday/initialize.php';
-}
 
 if ( get_option('enable_bookurier_print') == '1' ) {
     include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/bookurier/initialize.php';
@@ -31,21 +28,8 @@ if ( get_option('enable_nemo_print') == '1' ) {
     include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/nemo/initialize.php';
 }
 
-if ( get_option('enable_memex_print') == '1' ) {
-    include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/memex/initialize.php';
-}
 
-if ( get_option('enable_optimus_print') == '1' ) {
-    include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/optimus/initialize.php';
-}
 
-if ( get_option('enable_express_print') == '1' ) {
-    include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/express/initialize.php';
-}
-
-if ( get_option('enable_team_print') == '1' ) {
-    include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/team/initialize.php';
-}
 
 //Global bulk download
 add_action('admin_footer', 'safealternative_add_bulk_download_action');

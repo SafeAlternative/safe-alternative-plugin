@@ -39,11 +39,6 @@ add_action('admin_init', function () {
     register_setting('safealternative_settings', 'enable_dpd_print');
     register_setting('safealternative_settings', 'enable_dpd_shipping');
 
-    // Sameday
-    add_option('enable_sameday_print', '0');
-    add_option('enable_sameday_shipping', '0');
-    register_setting('safealternative_settings', 'enable_sameday_print');
-    register_setting('safealternative_settings', 'enable_sameday_shipping');
 
     // Bookurier
     add_option('enable_bookurier_print', '0');
@@ -51,32 +46,7 @@ add_action('admin_init', function () {
     register_setting('safealternative_settings', 'enable_bookurier_print');
     register_setting('safealternative_settings', 'enable_bookurier_shipping');
 
-    //Memex
-    add_option('enable_memex_print', '0');
-    add_option('enable_memex_shipping', '0');
-    //add_option('enable_memex_call_pickup', '0');
-    register_setting('safealternative_settings', 'enable_memex_print');
-    register_setting('safealternative_settings', 'enable_memex_shipping');
-    //register_setting('safealternative_settings', 'enable_memex_call_pickup');
-
-    // Optimus
-    add_option('enable_optimus_print', '0');
-    add_option('enable_optimus_shipping', '0');
-    register_setting('safealternative_settings', 'enable_optimus_print');
-    register_setting('safealternative_settings', 'enable_optimus_shipping');
-
-    //Express
-    add_option('enable_express_print', '0');
-    add_option('enable_express_shipping', '0');
-    register_setting('safealternative_settings', 'enable_express_print');
-    register_setting('safealternative_settings', 'enable_express_shipping');
-
-    //Team
-    add_option('enable_team_print', '0');
-    add_option('enable_team_shipping', '0');
-    register_setting('safealternative_settings', 'enable_team_print');
-    register_setting('safealternative_settings', 'enable_team_shipping');
-
+    
     // SafeAlternative
     add_option('user_safealternative', '');
     add_option('password_safealternative', '');

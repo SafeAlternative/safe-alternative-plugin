@@ -84,7 +84,7 @@ add_filter('plugins_api', function ($res, $action, $args) {
         $res->requires_php = '7.1';
         $res->sections = array(
             'description' => $remote->section->description,
-            'changelog' => (new SafeAlternative\cebe\markdown\GithubMarkdown)->parse(file_get_contents($remote->section->changelog))
+            'changelog' => file_get_contents($remote->section->changelog),
         );
 
         if (!empty($remote->section->screenshots)) {
@@ -92,7 +92,7 @@ add_filter('plugins_api', function ($res, $action, $args) {
         }
 
         $res->banners = array(
-            'low' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/banner-772x250.png',
+            'low' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/sigla_si_logo_safe_alternative.png',
             'high' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/banner-1544x500.png'
         );
 
@@ -139,7 +139,9 @@ add_filter('site_transient_update_plugins', function ($transient) {
             $res->requires_php = '7.1';
 
             $res->icons = array(
-                'default' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/icon-256x256.png'
+                //'default' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/icon-256x256.png'
+                'default' => SAFEALTERNATIVE_PLUGIN_URL . '/assets/images/sigla_si_logo_safe_alternative.png'
+                
             );
 
             $transient->response[$res->plugin] = $res;

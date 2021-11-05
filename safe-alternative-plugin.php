@@ -27,12 +27,12 @@ define('SAFEALTERNATIVE_API_URL', 'http://localhost/safe-alternative/public/api/
 define('SAFEALTERNATIVE_DB_VER', '1.1.2');
 
 // Mandatory
-include SAFEALTERNATIVE_PLUGIN_PATH . '/vendor/scoper-autoload.php';
+
 include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/helper_functions.php';
 include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/register_settings.php';
 include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/handle_update_checking.php';
 include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/admin/admin_menu.php';
-include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/admin/admin_report.php';
+
 
 // Plugin States
 include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/handle_plugin_old_version.php';

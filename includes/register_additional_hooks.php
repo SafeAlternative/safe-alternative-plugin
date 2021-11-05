@@ -9,10 +9,7 @@ add_filter('cron_schedules', function ($schedules) {
         'interval' => 12 * HOUR_IN_SECONDS,
         'display' => __('Twice Daily Safealternative')
     );
-    $schedules['safealternative_memex_daily_pickup'] = array(
-        'interval' => 24 * HOUR_IN_SECONDS,
-        'display' => __('Memex Pickup Safealternative')
-    );
+
     return $schedules;
 }, 1000);
 
@@ -22,7 +19,7 @@ function safealternative_add_awb_search(array $search_fields)
 {
     if (empty($search_fields)) $search_fields = array();
     return array_merge(
-        array("awb_bookurier", "awb_urgent_cargus", "awb_dpd", "awb_fan", "awb_gls", "awb_sameday", "awb_memex"),
+        array("awb_bookurier", "awb_urgent_cargus", "awb_dpd", "awb_fan", "awb_gls"),
         $search_fields
     );
 }
@@ -83,35 +80,7 @@ add_action("wp_ajax_safealternative_reset_mail", function () {
             update_option('dpd_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
             break;
 
-        case 'sameday':
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/sameday/templates/default-email-template.php';
-            update_option('sameday_email_template', $default_template);
-            update_option('sameday_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
-            break;
-
-        case 'memex':
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/memex/templates/default-email-template.php';
-            update_option('memex_email_template', $default_template);
-            update_option('memex_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
-            break;
-
-        case 'optimus':
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/optimus/templates/default-email-template.php';
-            update_option('optimus_email_template', $default_template);
-            update_option('optimus_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
-            break;
-
-        case 'express':
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/express/templates/default-email-template.php';
-            update_option('express_email_template', $default_template);
-            update_option('express_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
-            break;
-
-        case 'team':
-            include SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/team/templates/default-email-template.php';
-            update_option('team_email_template', $default_template);
-            update_option('team_subiect_mail', 'Comanda dumneavoastra a fost expediata!');
-            break;
+ 
         
         default: throw new Exception('Case unhandled.');
     }
@@ -158,35 +127,13 @@ function safealternative_send_awb_email_action($order)
         return GLSGenereazaAWB::send_mails($order_id, $awb, $email);
     }
 
-    if ($awb = get_post_meta($order_id, 'awb_sameday', true)) {
-        include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/sameday/initialize.php';
-        return SamedayAWB::send_mails($order_id, $awb, $email);
-    }
-
-    if ($awb = get_post_meta($order_id, 'awb_memex', true)) {
-        include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/memex/initialize.php';
-        return MemexAWB::send_mails($order_id, $awb, $email);
-    }
 
     if ($awb = get_post_meta($order_id, 'awb_nemo', true)) {
         include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/nemo/initialize.php';
         return NemoWB::send_mails($order_id, $awb, $email);
     }
 
-    if ($awb = get_post_meta($order_id, 'awb_optimus', true)) {
-        include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/optimus/initialize.php';
-        return OptimusAWB::send_mails($order_id, $awb, $email);
-    }
-
-    if ($awb = get_post_meta($order_id, 'awb_express', true)) {
-        include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/express/initialize.php';
-        return ExpressAWB::send_mails($order_id, $awb, $email);
-    }
-
-    if ($awb = get_post_meta($order_id, 'awb_team', true)) {
-        include_once SAFEALTERNATIVE_PLUGIN_PATH . '/includes/print-methods/team/initialize.php';
-        return TeamAWB::send_mails($order_id, $awb, $email);
-    }
+  
 }
 
 add_action("wp_ajax_safealternative_send_awb_email", function () {

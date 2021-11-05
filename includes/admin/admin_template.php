@@ -1,26 +1,22 @@
 <?php 
     $fan_print = esc_attr( get_option('enable_fan_print') );
     $fan_shipping = esc_attr( get_option('enable_fan_shipping') );
-    $memex_print = esc_attr( get_option('enable_memex_print') );
-    $memex_shipping = esc_attr( get_option('enable_memex_shipping') );
+
     $nemo_print = esc_attr( get_option('enable_nemo_print') );
     $nemo_shipping = esc_attr( get_option('enable_nemo_shipping') );
+
     $cargus_print = esc_attr( get_option('enable_cargus_print') );
     $cargus_shipping = esc_attr( get_option('enable_cargus_shipping') );
+    
     $gls_print = esc_attr( get_option('enable_gls_print') );
     $gls_shipping = esc_attr( get_option('enable_gls_shipping') );
+
     $dpd_print = esc_attr( get_option('enable_dpd_print') );
     $dpd_shipping = esc_attr( get_option('enable_dpd_shipping') );
-    $sameday_print = esc_attr( get_option('enable_sameday_print') );
-    $sameday_shipping = esc_attr( get_option('enable_sameday_shipping') );
+
     $bookurier_print = esc_attr( get_option('enable_bookurier_print') );
     $bookurier_shipping = esc_attr( get_option('enable_bookurier_shipping') );
-    $optimus_print = esc_attr( get_option('enable_optimus_print') );
-    $optimus_shipping = esc_attr( get_option('enable_optimus_shipping') );
-    $express_print = esc_attr( get_option('enable_express_print') );
-    $express_shipping = esc_attr( get_option('enable_express_shipping') );
-    $team_print = esc_attr( get_option('enable_team_print') );
-    $team_shipping = esc_attr( get_option('enable_team_shipping') );
+
     $enable_checkout_city_select = esc_attr( get_option('enable_checkout_city_select') );
     $courier_email_from = esc_attr( get_option('courier_email_from') );
     $safealternative_is_multisite = esc_attr( get_option('safealternative_is_multisite') );
@@ -57,7 +53,7 @@
 </style>
 
 <div class="wrap">
-    <h1>SafeAlternative - Setari generale</h1>
+    <h1>Safe Alternative - Setari generale</h1>
     <br>
     <form action="options.php" method="post">
         <?php
@@ -67,13 +63,13 @@
         <table>
 
             <tr>
-                <th align="left">Utilizator SafeAlternative* :</th>
-                <td><input type="text" name="user_safealternative" value="<?= esc_attr(get_option('user_safealternative')); ?>" size="50" placeholder="Numele utilizatorului SafeAlternative"/></td>
+                <th align="left">Utilizator Safe Alternative* :</th>
+                <td><input type="text" name="user_safealternative" value="<?= esc_attr(get_option('user_safealternative')); ?>" size="50" placeholder="Numele utilizatorului Safe Alternative"/></td>
             </tr>
             
             <tr>
-                <th align="left">Parola SafeAlternative* :</th>
-                <td><input type="password" name="password_safealternative" value="<?= esc_attr(get_option('password_safealternative')); ?>" size="50" placeholder="Parola utilizatorului SafeAlternative"/></td>
+                <th align="left">Parola Safe Alternative* :</th>
+                <td><input type="password" name="password_safealternative" value="<?= esc_attr(get_option('password_safealternative')); ?>" size="50" placeholder="Parola utilizatorului Safe Alternative"/></td>
             </tr>
 
             <tr>
@@ -199,35 +195,7 @@
                 </td>
             </tr>
 
-            <tr class="hideOnFail">
-                <th><hr></th>                
-                <td><hr></td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left"><h2>Sameday</h2></th>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left">Generare AWB:</th>
-                <td>
-                    <select name="enable_sameday_print">
-                        <option value="0" <?= $sameday_print == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $sameday_print == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left">Metoda de livrare:</th>
-                <td>
-                    <select name="enable_sameday_shipping">
-                        <option value="0" <?= $sameday_shipping == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $sameday_shipping == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
+ 
             <tr class="hideOnFail">
                 <th><hr></th>                
                 <td><hr></td>
@@ -285,119 +253,7 @@
                 </td>
             </tr>
 
-            <tr class="hideOnFail">
-                <th><hr></th>                
-                <td><hr></td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left"><h2>Memex</h2></th>
-            </tr>
-            
-            <tr class="hideOnFail">
-                <th align="left">Generare AWB:</th>
-                <td>
-                    <select name="enable_memex_print">
-                        <option value="0" <?= $memex_print == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $memex_print == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-            
-            <tr class="hideOnFail">
-                <th align="left">Metoda de livrare:</th>
-                <td>
-                    <select name="enable_memex_shipping">
-                        <option value="0" <?= $memex_shipping == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $memex_shipping == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th><hr></th>                
-                <td><hr></td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left"><h2>OptimusCourier</h2></th>
-            </tr>
-            
-            <tr class="hideOnFail">
-                <th align="left">Generare AWB:</th>
-                <td>
-                    <select name="enable_optimus_print">
-                        <option value="0" <?= $optimus_print == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $optimus_print == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left">Metoda de livrare:</th>
-                <td>
-                    <select name="enable_optimus_shipping">
-                        <option value="0" <?= $optimus_shipping == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $optimus_shipping == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th><hr></th>                
-                <td><hr></td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left"><h2>ExpressCourier</h2></th>
-            </tr>
-            
-            <tr class="hideOnFail">
-                <th align="left">Generare AWB:</th>
-                <td>
-                    <select name="enable_express_print">
-                        <option value="0" <?= $express_print == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $express_print == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="hideOnFail">
-                <th align="left">Metoda de livrare:</th>
-                <td>
-                    <select name="enable_express_shipping">
-                        <option value="0" <?= $express_shipping == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $express_shipping == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th><hr></th>                
-                <td><hr></td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left"><h2>TeamCourier</h2></th>
-            </tr>
-            
-            <tr class="hideOnFail">
-                <th align="left">Generare AWB:</th>
-                <td>
-                    <select name="enable_team_print">
-                        <option value="0" <?= $team_print == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $team_print == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
-            <tr class="hideOnFail">
-                <th align="left">Metoda de livrare:</th>
-                <td>
-                    <select name="enable_team_shipping">
-                        <option value="0" <?= $team_shipping == '0' ? 'selected="selected"' : ''; ?>>Inactiva</option>
-                        <option value="1" <?= $team_shipping == '1' ? 'selected="selected"' : ''; ?>>Activa</option>
-                    </select>
-                </td>
-            </tr>
+ 
 
             <tr class="hideOnFail">
                 <th><hr></th>                
@@ -455,18 +311,6 @@
                 [3] Activati aceasta optiune daca folositi WP Multisite si intampinati erori 404 la generari sau cand accesati pagini folosite de plugin-ul nostru.</td>
             </tr>
 
-            <tr class="hideOnFail">
-                <td colspan="2">
-                    <textarea id="textReport" cols="30" rows="8" readonly="true" style="resize: none;"><?=CR_generate_report()?></textarea>
-                </td>
-            </tr>
-
-            <tr class="hideOnFail">
-                <th align="left">Trimite raport pentru asistenta:</th>
-                <td>
-                    <input id="sendReport" type="button" class="button button-secondary" value="Trimite raport">
-                </td>
-            </tr>
 
             <tr>
                 <th><hr></th>                
@@ -481,7 +325,7 @@
             </tr>
 
             <tr>
-                <td colspan="2" style="text-align:center;">© Copyright <script>document.write(new Date().getFullYear());</script> | Un sistem prietenos de generare AWB-uri creat de <a href="https://safe-alternative.ro/" target="_blank">SafeAlternative</a>.</td>
+                <td colspan="2" style="text-align:center;">© Copyright <script>document.write(new Date().getFullYear());</script> | Un sistem prietenos de generare AWB-uri creat de <a href="https://safe-alternative.ro/" target="_blank">Safe Alternative</a>.</td>
             </tr>
         </table>
     </form>
@@ -495,20 +339,6 @@
             $('button[name="validate_api"]').click();
         });
 
-        $('#sendReport').on('click', function(){
-            $.ajax({
-                type: 'POST',
-                url: ajaxurl,
-                data: {
-                    'action': 'CR_send_report',
-                },
-                success: function(response) { 
-                    response = JSON.parse(response);
-                    if(response['success']) 
-                        $('#sendReport').prop('disabled', true).val('✓ Raportul a fost trimis cu succes.').css('cssText', 'color: green !important; opacity: 0.75;');
-                }
-            });
-        });
 
         $('button[name="validate_api"]').on('click', function(){
             let user_field = $('input[name="user_safealternative"]'),
