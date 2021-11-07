@@ -2,8 +2,8 @@
 
 $dir = plugin_dir_path(__FILE__);
 
-include_once($dir.'urgent_cargus.class.php');
-include_once($dir.'courier.class.php');
+include_once($dir.'courierCargusSafe.class.php');
+include_once($dir.'courierCargus.class.php');
 
 class CargusAWB {
 
@@ -30,7 +30,7 @@ class CargusAWB {
                 
     	$url = get_option ( 'uc_url' );
     	$key = get_option ( 'uc_key' );
-    	$this->urgent = new UrgentCargusAPI ( $url, $key );
+    	$this->urgent = new CourierCargus( $url, $key );
     }
 
     function add_plugin_page_settings(){
@@ -52,6 +52,7 @@ class CargusAWB {
         add_option( 'uc_key', 'c76c9992055e4e419ff7fa953c3e4569');
         add_option( 'uc_username', '');
         add_option( 'uc_password', '');
+        add_option( 'uc_token', '');
         add_option( 'uc_punct_ridicare', '0');    
         add_option( 'uc_price_table_id', '0');    
         add_option( 'uc_nr_colete', '1');
@@ -81,6 +82,7 @@ class CargusAWB {
         register_setting( 'urgent-cargus-plugin-settings', 'uc_key' );
         register_setting( 'urgent-cargus-plugin-settings', 'uc_username' );
         register_setting( 'urgent-cargus-plugin-settings', 'uc_password' );
+        register_setting( 'urgent-cargus-plugin-settings', 'uc_token' );        
         register_setting( 'urgent-cargus-plugin-settings', 'uc_punct_ridicare' );
         register_setting( 'urgent-cargus-plugin-settings', 'uc_price_table_id' );
         register_setting( 'urgent-cargus-plugin-settings', 'uc_nr_colete' );

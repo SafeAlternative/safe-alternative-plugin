@@ -4,14 +4,13 @@ $url = get_option('uc_url');
 $key = get_option('uc_key');
 $UserName = get_option('uc_username');
 $Password = get_option('uc_password');
-$obj_urgent = new UrgentCargusAPI($url, $key);
+$obj_urgent = new CourierCargus($url, $key);
 $fields = array(
     'UserName' => $UserName,
     'Password' => $Password,
 );
 $json_login = json_encode($fields);
 $login = $obj_urgent->CallMethod('LoginUser', $json_login, 'POST');
-
 $token = $login['status'] == "200" ? json_decode($login['message']) : null;
 
 $resultLocations = $obj_urgent->CallMethod('PickupLocations/GetForClient', "", 'GET', $token);
@@ -60,7 +59,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
         border: solid 1px;
         padding: 20px;
     }
-    <?= $valid_auth == false ? '.hideOnFail { display: none; }' : '.hideEmail { display: none; }'; ?>
+    <?php // $valid_auth == false ? '.hideOnFail { display: none; }' : '.hideEmail { display: none; }'; ?>
 </style>
 
 <div class="wrap">
@@ -75,15 +74,22 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
     <table>
         <input type="hidden" name="uc_url" value="https://urgentcargus.azure-api.net/api">
         <input type="hidden" name="uc_key" value="c76c9992055e4e419ff7fa953c3e4569">
-
+        <input type="hidden" name="uc_token" value="<?= esc_attr( get_option('uc_token') ); ?>" />
+        <input type="hidden" name="token" value="<?= esc_attr( get_option('token') ); ?>" />
         <tr>
-            <th align="left">Utilizator UrgentCargus</th>
+            <th align="left">Utilizator Urgent Cargus</th>
             <td><input type="text"  name="uc_username" value="<?= esc_attr(get_option('uc_username')); ?>" size="50" placeholder="Numele utilizatorului Cargus"/></td>
         </tr>
 
         <tr>
-            <th align="left">Parola UrgentCargus</th>
+            <th align="left">Parola Urgent Cargus</th>
             <td><input type="password"  name="uc_password" value="<?= esc_attr(get_option('uc_password')); ?>" size="50" placeholder="Parola utilizatorului Cargus"/></td>
+        </tr>
+
+
+        <tr>
+            <th align="left">Key Urgent Cargus</th>
+            <td><input type="text"  name="uc_key" value="<?= esc_attr(get_option('uc_key')); ?>" size="50" placeholder="API Key  Cargus"/></td>
         </tr>
 
         <tr>
@@ -98,37 +104,8 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             <td><hr style="margin: 15px 0;"></td>
         </tr> 
 
-        <tr class="hideEmail">
-            <th align="left"></th>
-            <td>
-            <span style="color: red;"><b>Buna ziua!<br>Pentru credențialele de Cargus care intampina probleme cu autentificarea in modul, trebuie sa trimiteti emailul de mai jos celor de la Cargus pe adresa de email: <a href = "mailto: ecom@urgentcargus.ro">ecom@urgentcargus.ro</a> si sa completati datele din email - pastrati insa api key neschimbat.</b></span>
-            </td>
-        </tr>
-
-        <tr class="hideEmail">
-        <th align="left">Continut mail:</th>
-            <td>
-                <div class="cargus_auth">Buna ziua,
-                <br/>
-                Va rugam sa ne ajutati cu sincronizarea contului firmei noastre cu cheia api de mai jos.
-                <br/>
-                Datele firmei sunt:
-                <br/>
-                Nume firme: [COMPLETATI AICI]
-                <br/>
-                Cod fiscal: [COMPLETATI AICI]
-                <br/>
-                Nr inregistrare recom:  [COMPLETATI AICI]
-                <br/>
-                Administrator: [COMPLETATI AICI]
-                <br/>
-                API Key: <strong>c76c9992055e4e419ff7fa953c3e4569</strong>
-                </br>
-                Username Webexpress:  [COMPLETATI AICI]</div>
-            </td>
-        </tr>        
-        
-        <tr class="hideOnFail"> 
+               
+        <tr align="left"> 
             <th align="left">ID punct ridicare</th> 
             <td> 
                 <select name="uc_punct_ridicare"> <?php
@@ -141,7 +118,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td> 
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">ID tarif</th>
             <?php
                 $resultPriceTables = $obj_urgent->CallMethod('PriceTables', "", 'GET', $token);
@@ -158,17 +135,17 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             <?php } ?>
         </tr> 
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Numar colete:</th>
             <td><input type="number" name="uc_nr_colete" value="<?= esc_attr(get_option('uc_nr_colete')); ?>" size="50" /></td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Numar plicuri:</th>
             <td><input type="number" name="uc_nr_plicuri" value="<?= esc_attr(get_option('uc_nr_plicuri')); ?>" size="50" /></td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Plata transport:</th>
             <td>
                 <select name="uc_plata_transport">
@@ -178,7 +155,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
         
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Plata ramburs:</th>
             <td>
                 <select name="uc_plata_ramburs">
@@ -188,7 +165,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Asigurare:</th>
             <td>
                 <select name="uc_asigurare">
@@ -198,7 +175,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Deschidere la livrare:</th>
             <td>
                 <select name="uc_deschidere">
@@ -208,7 +185,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
         
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Livrare matinala:</th>
             <td>
                 <select name="uc_matinal">
@@ -218,7 +195,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
         
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">Livrare Sambata:</th>
             <td>
                 <select name="uc_sambata">
@@ -228,7 +205,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">Tip serviciu:</th>
             <td>
                 <?php $uc_tip_serviciu = esc_attr(get_option('uc_tip_serviciu')); ?>
@@ -242,7 +219,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
     
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">Descrie continut in AWB:</th>
             <td>
                 <select name="uc_descrie_continut">
@@ -252,7 +229,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">Format tiparire AWB:</th>
             <td>
                 <select name="uc_print_format">
@@ -262,7 +239,7 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th  align="left">Tiparire dubla AWB:</th>
             <td>
                 <select name="uc_print_once">
@@ -272,52 +249,52 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Observatii:</th>
             <td><input type="text" placeholder="A se contacta telefonic" name="uc_observatii" value="<?= esc_attr(get_option('uc_observatii')); ?>" size="50" /></td>
         </tr>    
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Referinta Serie Client:</th>
             <td><input type="text" name="uc_serie_client" value="<?= esc_attr(get_option('uc_serie_client')); ?>" size="50" /></td>
         </tr>   
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th><hr style="margin: 15px 0;"></th>                
             <td><hr style="margin: 15px 0;"></td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Lungime colet standard:</th>
             <td><input type="text" name="uc_force_length" value="<?= esc_attr( get_option('uc_force_length') ); ?>" size="50" /></td>
         </tr>   
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Latime colet standard:</th>
             <td><input type="text" name="uc_force_width" value="<?= esc_attr( get_option('uc_force_width') ); ?>" size="50" /></td>
         </tr>   
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Inaltime colet standard:</th>
             <td><input type="text" name="uc_force_height" value="<?= esc_attr( get_option('uc_force_height') ); ?>" size="50" /></td>
         </tr>        
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Greutate colet standard:</th>
             <td><input type="text" name="uc_force_weight" value="<?= esc_attr( get_option('uc_force_weight') ); ?>" size="50" /></td>
         </tr>   
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left"></th>
             <td>In cazul in care dimensiunile standard nu sunt completate, ele vor fi calculate automat in functie de parametrii configurati la nivel de produs</td>
         </tr>                                    
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th><hr style="margin: 15px 0;"></th>                
             <td><hr style="margin: 15px 0;"></td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Trimite mail la generare:</th>
             <td>
                 <select name="uc_trimite_mail">
@@ -327,12 +304,12 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
         
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Subiect mail:</th>
             <td><input type="text"  name="uc_subiect_mail" value="<?= esc_attr(get_option('uc_subiect_mail')); ?>" size="50" /></td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Continut mail:</th>
             <td>
                 <?php
@@ -342,14 +319,14 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left"></th>
             <td align="right">
                 <button type="button" name="reset_email_template" class="button">Reseteaza subiect si continut mail implicit</button>
             </td>
         </tr>  
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left"></th>
             <td><b>In text-ul de mai sus urmatoarele expresii vor fi completate automat la generarea AWB-ului:</b><br>
                 <b>[nr_comanda]</b>    - Reprezinta numarul comenzii.<br>
@@ -359,12 +336,12 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th><hr style="margin: 15px 0;"></th>                
             <td><hr style="margin: 15px 0;"></td>
         </tr>          
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Generare AWB automata:</th>
             <td>
                 <select name="uc_auto_generate_awb">
@@ -374,12 +351,12 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left"></th>
             <td>Generarea AWB-ului automata in momentul in care se plaseaza o comanda noua si primeste statusul Processing. </td>
         </tr>     
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left">Marcheaza comanda Complete automat:</th>
             <td>
                 <select name="uc_auto_mark_complete">
@@ -389,12 +366,12 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
             </td>
         </tr>
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th align="left"></th>
             <td>Marcheaza comanda cu statusul Complete automat atunci cand curierul ii marcheaza statusul ca si Confirmat sau Rambursat.</td>
         </tr>                      
 
-        <tr class="hideOnFail">
+        <tr align="left">
             <th><hr style="margin: 15px 0;"></th>                
             <td><hr style="margin: 15px 0;"></td>
         </tr>
@@ -412,25 +389,48 @@ $valid_auth = ($resultLocations['status'] == "200" && $resultMessage != "Failed 
 
 <script>
     jQuery( $ => {
-        const url = "<?=SAFEALTERNATIVE_API_URL?>/api/";
+        const url = "<?=SAFEALTERNATIVE_API_URL?>cargus/";
         
         $('button[name="validate_urgent"]').on('click', function(){
             let responseDiv =  $('.responseHereUrgent'),
+                token_field_uc = $('input[name="uc_token"]'),
                 submitBtn = $('#urgentcargus_settings_form #submit');
             $.ajax({
                 type: 'POST',
-                url: url+"validateUrgentAuth",
+                url: url+"validateAuth",
+                headers: {
+                    Authorization: 'Bearer '+$('input[name="token"]').val(),
+                },
                 data: {
-                    urgent_user: $('input[name="uc_username"]').val(),
-                    urgent_pass: $('input[name="uc_password"]').val(),
+                    username: $('input[name="uc_username"]').val(),
+                    password: $('input[name="uc_password"]').val(),
+                    subscriptionKey: $('input[name="uc_key"]').val(),
                 },
                 dataType: "json",
+                
+                statusCode: {
+                    401: function (response) {
+                        token_field_uc.val('');
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');
+                    },
+                    400: function (response) {
+                        token_field_uc.val('');
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');   
+                    },
+
+                    404: function (response) {
+                        token_field_uc.val('');
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');                  
+                    }
+                },
                 success: function(response) { 
                     if(response['success']){
+                        token_field_uc.val(response['token']);
                         responseDiv.text('Autentificare reusita.').css('color', '#34a934');
                         submitBtn.click();
                     } else {
-                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');
+                        token_field_uc.val('');
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');                       
                         submitBtn.click();
                     }
                 }

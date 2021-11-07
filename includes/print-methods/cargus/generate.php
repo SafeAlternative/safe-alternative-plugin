@@ -5,15 +5,9 @@ include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'urgent_cargus.class.php');
+include_once(plugin_dir_path(__FILE__) .'courierCargusSafe.class.php');
 
-$url = get_option('uc_url');
-$key = get_option('uc_key');
-$UserName = rawurlencode(get_option('uc_username'));
-$Password = rawurlencode(get_option('uc_password'));
-$user_safealternative = rawurlencode(get_option('user_safealternative'));
-$password_safealternative = rawurlencode(get_option('password_safealternative'));
+
 $trimite_mail = get_option('uc_trimite_mail');
 
 $awb_details = $_POST['awb'];
@@ -39,20 +33,30 @@ foreach (($awb_details['ParcelCodes'] ?? null) as $parcel_code) {
 
 if (!$totalWeight) $totalWeight = 1;
 $awb_details['TotalWeight'] = $totalWeight;
-$jsonAwb = json_encode($awb_details);
 
-$courier = new SafealternativeUCClass();
-$result = $courier->callMethod(SAFEALTERNATIVE_API_URL . "/shipping/urgentcargus/generateAwb/" . $user_safealternative . "/" . $password_safealternative . "/" . $UserName . "/" . $Password, $jsonAwb, 'POST');
 
-if ($result['status'] != "200") {
-    echo ("<b class='bad'> POST Awb: </b> <pre>" . $result['message'] . "</pre>");
+
+$awb_details['token'] =  get_option('token');
+$awb_details['token_cargus'] =  get_option('uc_token');
+$awb_details['subscriptionKey']  = get_option('uc_key');
+
+
+
+
+
+$courier  = new CourierCargusSafe();
+$response = $courier->callMethod("generateAwb", $awb_details, 'POST');
+
+
+if (!$response['success']) {
+    echo ("<b class='bad'> POST Awb: </b> <pre>" . $response['message'] . "</pre>");
     exit();
 } else {
-    if (!is_numeric(json_decode($result['message']))) {
-        set_transient('urgent_account_settings', $result['message'], MONTH_IN_SECONDS);
+    if (!is_numeric(json_decode($response['message']))) {
+        
         exit();
     } else {
-        $awb = json_decode($result['message']);
+        $awb = json_decode($response['message']);
         if ($trimite_mail == '1') {
             CargusAWB::send_mails($_GET['order_id'], $awb, $awb_details['Recipient']['Email']);
         }
@@ -60,14 +64,7 @@ if ($result['status'] != "200") {
         update_post_meta($_GET['order_id'], 'awb_urgent_cargus', $awb);
         do_action('safealternative_awb_generated', 'UrgentCargus', $awb, $_GET['order_id']);
 
-        $account_status_response = $courier->callMethod(SAFEALTERNATIVE_API_URL . "/shipping/urgentcargus/newAccountStatus/" . $user_safealternative . "/" . $password_safealternative . "/" . $UserName . "/" . $Password, '', 'POST');
-        $account_status = json_decode($account_status_response['message']);
 
-        if ($account_status->show_message) {
-            set_transient('urgent_account_status', $account_status->message, MONTH_IN_SECONDS);
-        } else {
-            delete_transient('urgent_account_status');
-        }
 
         if (isset($_POST['paged'])) {
             header('Location: ' . safealternative_redirect_url() . 'edit.php?post_type=shop_order&paged=' . $_POST['paged']);

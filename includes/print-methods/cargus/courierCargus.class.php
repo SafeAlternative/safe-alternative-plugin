@@ -1,6 +1,6 @@
 <?php
 
-class UrgentCargusAPI
+class CourierCargus
 {
 	private $curl;
 	private $url;
