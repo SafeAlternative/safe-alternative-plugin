@@ -40,10 +40,6 @@ $awb_details['token'] =  get_option('token');
 $awb_details['token_cargus'] =  get_option('uc_token');
 $awb_details['subscriptionKey']  = get_option('uc_key');
 
-
-
-
-
 $courier  = new CourierCargusSafe();
 $response = $courier->callMethod("generateAwb", $awb_details, 'POST');
 

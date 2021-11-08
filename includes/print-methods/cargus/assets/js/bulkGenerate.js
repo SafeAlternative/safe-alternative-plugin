@@ -1,5 +1,5 @@
 jQuery(function ($) {
-    $('<option>').val('generateAWB_UC').text('Genereaza AWB UrgentCargus').appendTo("select[name='action'], select[name='action2']");
+    $('<option>').val('generateAWB_UC').text('Genereaza AWB Cargus').appendTo("select[name='action'], select[name='action2']");
 
     $('#doaction, #doaction2').click(function (e) {
         let select = $(this).siblings('select');

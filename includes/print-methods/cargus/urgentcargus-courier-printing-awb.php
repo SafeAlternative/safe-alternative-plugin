@@ -661,38 +661,32 @@ class CargusAWB {
             $awbsDetails = apply_filters('safealternative_awb_details', $awbsDetails, 'UrgentCargus', $order);
     
             $trimite_mail = get_option ( 'uc_trimite_mail');
-            $jsonAwb = json_encode($awbsDetails);
+            
 
-            $UserName = rawurlencode(get_option ( 'uc_username' ));
-            $Password = rawurlencode(get_option ( 'uc_password' ));
-            $user_safealternative = rawurlencode(get_option ( 'user_safealternative' ));
-            $password_safealternative = rawurlencode(get_option ( 'password_safealternative' ));
             
-            $courier = new SafealternativeUCClass();
-            $result = $courier->callMethod(SAFEALTERNATIVE_API_URL."/shipping/urgentcargus/generateAwb/".$user_safealternative."/".$password_safealternative."/".$UserName."/".$Password, $jsonAwb, 'POST');
-            
-            if ($result['status']!="200") {
-                set_transient('urgent_account_settings', $result['message'], MONTH_IN_SECONDS);
-            } else {
-                if ( !is_numeric(json_decode($result['message'])) ) {
-                    set_transient('urgent_account_settings', $result['message'], MONTH_IN_SECONDS);
-                } else {
-                    $awb=json_decode($result['message']);
+            $awbsDetails['token'] =  get_option('token');
+            $awbsDetails['token_cargus'] =  get_option('uc_token');
+            $awbsDetails['subscriptionKey']  = get_option('uc_key');
+
+            $courier  = new CourierCargusSafe();
+            $response = $courier->callMethod("generateAwb", $awbsDetails, 'POST'); 
+
+            if ($response['success']) {
+                if ( !is_numeric(json_decode($response['message'])) ) {
+                    
+                } 
+                
+                else {
+
+                    $awb=json_decode($response['message']);
+
                     if ($trimite_mail=='1') {
                         CargusAWB::send_mails($order_id, $awb, $awbsDetails['Recipient']['Email']);
                     }
                     
                     update_post_meta($order_id, 'awb_urgent_cargus', $awb);
                     do_action( 'safealternative_awb_generated', 'UrgentCargus', $awb , $order_id);
-
-                    $account_status_response = $courier->callMethod(SAFEALTERNATIVE_API_URL."/shipping/urgentcargus/newAccountStatus/" . $user_safealternative . "/" . $password_safealternative . "/" . $UserName . "/" . $Password, '', 'POST');
-                    $account_status = json_decode($account_status_response['message']);
-
-                    if($account_status->show_message){
-                        set_transient( 'urgent_account_status', $account_status->message, MONTH_IN_SECONDS );
-                    } else {
-                        delete_transient( 'urgent_account_status' );
-                    }                       
+                     
                 }
             }            
         } 

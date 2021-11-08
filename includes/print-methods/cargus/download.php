@@ -5,8 +5,7 @@ include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'urgent_cargus.class.php');
+include_once(plugin_dir_path(__FILE__) .'courierCargus.class.php');
 
 if (isset($_GET['awbs'])) {
     $awb = explode('X', $_GET['awbs']);
@@ -18,17 +17,11 @@ $jsonAwb = json_encode($awb);
 
 $url = get_option('uc_url');
 $key = get_option('uc_key');
-$UserName = rawurlencode(get_option('uc_username'));
-$Password = rawurlencode(get_option('uc_password'));
 
-$obj_urgent = new UrgentCargusAPI($url, $key);
-$fields = array(
-    'UserName' => urldecode($UserName),
-    'Password' => urldecode($Password)
-);
-$json = json_encode($fields);
-$login = $obj_urgent->CallMethod('LoginUser', $json, 'POST');
-$token = json_decode($login['message']);
+
+$obj_urgent = new CourierCargus($url, $key);
+$token = get_option('uc_token');
+
 
 $_POST['format'] = get_option('uc_print_format') ?? 0;
 $_POST['printMainOnce'] = get_option('uc_print_once') ?? 0;
