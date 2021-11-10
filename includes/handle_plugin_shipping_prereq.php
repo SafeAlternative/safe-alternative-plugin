@@ -59,46 +59,25 @@ function CR_insert_counties($wpdb)
 
 function CR_insert_localities($wpdb, $query_limit)
 {
-	$localities_response = safealternative_get_url_contents(SAFEALTERNATIVE_API_URL . '/api/fetch_localities');
-	$localities_response = json_decode($localities_response, true);
-	$localities_response_count = count($localities_response);
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	$sqlData = plugin_dir_path(__DIR__). DIRECTORY_SEPARATOR .'includes'.DIRECTORY_SEPARATOR.'courier_localities.sql';	
+	$insertSql = file_get_contents($sqlData);
+    $insertSqlChunks = explode(';', $insertSql);
+    foreach ($insertSqlChunks as $query) {
+		dbDelta( $query . ';' );
 
-	$query_start = "INSERT IGNORE INTO `courier_localities` (`fan_locality_id`, `cargus_locality_id`, `locality_name`, `fan_locality_name`, `cargus_locality_name`, `county_initials`, `county_name`, `fan_extra_km`, `cargus_extra_km`) VALUES ";
-
-	$query_values = '';
-	foreach ($localities_response as $key => $locality) {
-		$locality['fan_locality_name'] = !empty($locality['fan_locality_name']) ? "'" . $locality['fan_locality_name'] . "'" : 'NULL';
-		$locality['cargus_locality_name'] = !empty($locality['cargus_locality_name']) ? "'" . $locality['cargus_locality_name'] . "'" : 'NULL';
-
-		$query_values .= "( " . ($locality['fan_locality_id'] ?? 'NULL') . ", " . ($locality['cargus_locality_id'] ?? 'NULL') . ", '" . ($locality['locality_name']) . "', " . ($locality['fan_locality_name']) . ", " . ($locality['cargus_locality_name']) . ", '" . ($locality['county_initials']) . "', '" . ($locality['county_name']) . "', " . ($locality['fan_extra_km'] ?? 'NULL') . ", " . ($locality['cargus_extra_km'] ?? 'NULL') . "),";
-
-		if ($key % $query_limit == 0 || $key == ($localities_response_count - 1)) {
-			$query_values = rtrim($query_values, ',');
-			$wpdb->query($query_start . $query_values);
-			$query_values = '';
-		}
-	}
+    }
 }
 
 function CR_insert_zipcodes($wpdb, $query_limit)
 {
-	$zipcode_response = safealternative_get_url_contents(SAFEALTERNATIVE_API_URL . '/api/fetch_zipcodes');
-	$zipcode_response = json_decode($zipcode_response, true);
-	$zipcode_response_count = count($zipcode_response);
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	$sqlData = plugin_dir_path(__DIR__). DIRECTORY_SEPARATOR .'includes'.DIRECTORY_SEPARATOR.'courier_zipcodes.sql';	
+	$insertSql = file_get_contents($sqlData);
+    $insertSqlChunks = explode(';', $insertSql);
+    foreach ($insertSqlChunks as $query) {
+		dbDelta( $query . ';' );
 
-	$query_start = "INSERT IGNORE INTO `courier_zipcodes` (`id`, `County`, `City`, `Street`, `ZipCode`) VALUES ";
+    }
 
-	$query_values = '';
-	foreach ($zipcode_response as $key => $zipcode) {
-		$zipcode['Street'] = !empty($zipcode['Street']) ? "'" . $zipcode['Street'] . "'" : 'NULL';
-		$zipcode['ZipCode'] = str_pad($zipcode['ZipCode'], 6, "0", STR_PAD_LEFT);
-
-		$query_values .= "( " . ($zipcode['id']) . ", '" . ($zipcode['County']) . "', '" . ($zipcode['City']) . "', " . ($zipcode['Street']) . ", '" . ($zipcode['ZipCode']) . "'),";
-
-		if ($key % $query_limit == 0 || $key == ($zipcode_response_count - 1)) {
-			$query_values = rtrim($query_values, ',');
-			$wpdb->query($query_start . $query_values);
-			$query_values = '';
-		}
-	}
 }

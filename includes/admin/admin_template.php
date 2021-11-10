@@ -85,7 +85,7 @@
             </tr>
 
             <tr class="hideOnFail">
-                <th align="left"><h2>FanCourier</h2></th>
+                <th align="left"><h2>Fan Courier</h2></th>
             </tr>
             
             <tr class="hideOnFail">
@@ -114,7 +114,7 @@
             </tr>
 
             <tr class="hideOnFail">
-                <th align="left"><h2>UrgentCargus</h2></th>
+                <th align="left"><h2>Cargus</h2></th>
             </tr>
             
             <tr class="hideOnFail">
