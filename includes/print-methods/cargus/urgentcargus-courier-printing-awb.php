@@ -2,7 +2,6 @@
 
 $dir = plugin_dir_path(__FILE__);
 
-include_once($dir.'courierCargusSafe.class.php');
 include_once($dir.'courierCargus.class.php');
 
 class CargusAWB {

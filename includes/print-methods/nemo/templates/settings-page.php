@@ -46,6 +46,8 @@
         do_settings_sections('nemo-plugin-settings');
     ?>
     <table>
+
+        <input type="hidden" name="token" value="<?= esc_attr( get_option('token') ); ?>" />
         <tr>
             <th align="left">Nemo Key</th>
             <td><input type="text"  name="nemo_key" value="<?= esc_attr(get_option('nemo_key')); ?>" size="50" /></td>
@@ -78,14 +80,14 @@
             <td>
                 <select name="nemo_service">
                 <?php 
-                    $services = (new SafealternativeNemoClass)->get_services();
+                    $services = (new CourierNemo)->get_services();
                     $current_service = esc_attr(get_option('nemo_service'));
                     if (!empty($services) && empty($services['error'])) {
                         foreach($services as $service) {
                             $selected = ($service['name'] == $current_service) ? 'selected="selected"' : '';
                             echo "<option value='{$service['name']}' {$selected}>{$service['name']}</option>";
                         }
-                    } else {
+                    } else { var_dump($services); echo 'asdadadadsads';
                         ?> 
                             <option value="Standard" <?= esc_attr(get_option('nemo_service')) == 'Standard' ? 'selected="selected"' : ''; ?>>Standard</option>
                         <?php
@@ -340,27 +342,43 @@
 
 <script>
     jQuery( $ => {
-        const url = "<?=SAFEALTERNATIVE_API_URL?>/api/validateNemoAuth";
+        const url = "<?=SAFEALTERNATIVE_API_URL?>nemo/";
         
         $('button[name="validate_nemo"]').on('click', function(){
             let responseDiv =  $('.responseHereNemo'),
                 submitBtn = $('#nemo_settings_form #submit');
             $.ajax({
                 type: 'POST',
-                url: url,
+                url: url+"validateAuth",
+                headers: {
+                    Authorization: 'Bearer '+$('input[name="token"]').val(),
+                },
                 data: {
                     api_key: $('input[name="nemo_key"]').val(),
                 },
                 dataType: "json",
+
+                statusCode: {
+                    401: function (response) {
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');
+                    },
+                    400: function (response) {
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');   
+                    },
+
+                    404: function (response) {
+                        responseDiv.text('Autentificare esuata.').css('color', '#f44336');                  }
+                },
+
                 success: function(response) { 
-                    if(response['success']==1){
+                    if(response['success']){
                         responseDiv.text('Autentificare reusita.').css('color', '#34a934');
-                        submitBtn.click();
                     } else {
                         responseDiv.text('Autentificare esuata.').css('color', '#f44336');
-                        submitBtn.click();
                     }
                 }
+
+
             });
         });
 

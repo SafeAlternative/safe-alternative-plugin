@@ -1,7 +1,6 @@
 <?php
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir.'courier.class.php');
+include_once(plugin_dir_path(__FILE__).'courierNemo.class.php');
 
 class NemoAWB 
 {
@@ -12,11 +11,6 @@ class NemoAWB
         add_action( 'add_meta_boxes', array( $this, 'nemo_add_meta_box' ) );
         add_action( 'admin_init', array( $this, 'add_register_setting' ));
         
-        add_action('admin_notices', array(
-            $this,
-            'show_account_status_nag'
-        ), 10);
-
         add_action( 'woocommerce_order_status_changed', array(
             $this,
             'autogenerate_nemo_awb'
@@ -105,29 +99,6 @@ class NemoAWB
         require_once(plugin_dir_path(__FILE__) . '/templates/default-email-template.php');
     }
 
-    function show_account_status_nag()
-    {
-        global $wp;
-        $qv = $wp->query_vars['post_type'] ?? NULL;
-
-        if (($message_status = get_transient('nemo_account_status')) && $qv === "shop_order") {
-            ?>
-            <div class="notice notice-warning">
-                <p><?php _e($message_status, 'safealternative-nemo-woocommerce'); ?></p>
-            </div>
-            <?php
-        }
-
-        if (($message_settings = get_transient('nemo_account_settings'))) {
-            ?>
-            <div class="notice notice-warning">
-                <p><?php _e($message_settings, 'safealternative-nemo-woocommerce'); ?></p>
-            </div>
-            <?php
-            delete_transient('nemo_account_settings');
-        }    
-    }
-
     function nemo_plugin_page() 
     {
         require_once(plugin_dir_path(__FILE__) . '/templates/settings-page.php');
@@ -172,7 +143,7 @@ class NemoAWB
         $weight = round($weight);
 
         if( empty(get_option('nemo_key')) ) { 
-            echo '<div class="wrap"><h1>SafeAlternative Nemo AWB</h2><br><h2>Plugin-ul SafeAlternative Nemo AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=nemo-plugin-setting').'"> aici</a> pentru a il configura.</div>';
+            echo '<div class="wrap"><h1>Safe Alternative Nemo AWB</h2><br><h2>Plugin-ul Safe Alternative Nemo AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=nemo-plugin-setting').'"> aici</a> pentru a il configura.</div>';
             exit;
         }
 
@@ -336,7 +307,7 @@ class NemoAWB
         $weight = round($weight);
 
         if( empty(get_option('nemo_key')) ) { 
-            echo '<div class="wrap"><h1>SafeAlternative Nemo AWB</h2><br><h2>Plugin-ul SafeAlternative Nemo AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=nemo-plugin-setting').'"> aici</a> pentru a il configura.</div>';
+            echo '<div class="wrap"><h1>Safe Alternative Nemo AWB</h2><br><h2>Plugin-ul Safe Alternative Nemo AWB nu a fost configurat.</h2> Va rugam dati click <a href="'.safealternative_redirect_url('admin.php?page=nemo-plugin-setting').'"> aici</a> pentru a il configura.</div>';
             exit;
         }
 
@@ -485,7 +456,7 @@ class NemoAWB
 }
 // end class
 
-require_once(plugin_dir_path(__FILE__) . '/nemo.class.php');
+require_once(plugin_dir_path(__FILE__) . '/courierNemo.class.php');
 require_once(plugin_dir_path(__FILE__) . '/cron.php');
 
 //Bulk generate

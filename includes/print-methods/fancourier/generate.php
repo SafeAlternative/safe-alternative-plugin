@@ -4,7 +4,7 @@ include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-include_once(plugin_dir_path(__FILE__) .'/courierFanSafe.class.php');
+include_once(plugin_dir_path(__FILE__) .'/courierFan.class.php');
 
 $awb_details = $_POST['awb'];
 $awb_details['domain'] = site_url();

@@ -3,41 +3,39 @@
 define('WP_USE_THEMES', false);
 include '../../../../../../wp-load.php';
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'courier.class.php');
+include_once(plugin_dir_path(__FILE__).'courierNemo.class.php');
 
-$parameters = $_POST['awb'];
+$awb_details = $_POST['awb'];
 $trimite_mail = get_option('nemo_trimite_mail');
 
-if($parameters['retur'] == 'false'){
-    unset($parameters['retur_type']);
+if($awb_details['retur'] == 'false'){
+    unset($awb_details['retur_type']);
 }
 
-$courier = new SafealternativeNemoClass();
-$response = $courier->callMethod("generateAwb", $parameters, 'POST');
-$message = json_decode($response['message'], true);
+$awb_details['api_key'] = get_option('nemo_key');;
+$awb_details['token'] = get_option('token');
+    
+//var_dump($awb_details);exit;
 
+
+
+$courier  = new CourierNemoSafe();
+$response = $courier->callMethod("generateAwb", $awb_details, 'POST');
+
+
+//var_dump($response);exit;
 if ($response['status'] == 200) {
-    if (!empty($message['error'])) wp_die($message['error']);
+    if (!$response['success']) wp_die($response['error']);
 
-    $awb = $message['awb'];
+    $awb = $response['message'];
 
     if ($trimite_mail == 'da') {
-        NemoAWB::send_mails($_GET['order_id'], $awb, $parameters['recipient_email']);
+        NemoAWB::send_mails($_GET['order_id'], $awb, $awb_details['recipient_email']);
     }
     update_post_meta($_GET['order_id'], 'awb_nemo', $awb);
     update_post_meta($_GET['order_id'], 'awb_nemo_status', 'Inregistrat');
 
-    do_action('safealternative_awb_generated', 'Nemo', $awb);
-
-    $account_status_response = $courier->callMethod("newAccountStatus", [], 'POST');
-    $account_status = json_decode($account_status_response['message']);
-
-    if ($account_status->show_message) {
-        set_transient('nemo_account_status', $account_status->message, MONTH_IN_SECONDS);
-    } else {
-        delete_transient('nemo_account_status');
-    }
+    //do_action('safealternative_awb_generated', 'Nemo', $awb);
 
     header('Location: ' . safealternative_redirect_url() . 'post.php?post=' . $_GET['order_id'] . '&action=edit');
     exit;

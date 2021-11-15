@@ -5,7 +5,7 @@ include '../../../../../../wp-load.php';
 
 if (!current_user_can('manage_woocommerce')) exit;
 
-include_once(plugin_dir_path(__FILE__) .'courierCargusSafe.class.php');
+include_once(plugin_dir_path(__FILE__) .'courierCargus.class.php');
 
 
 $trimite_mail = get_option('uc_trimite_mail');

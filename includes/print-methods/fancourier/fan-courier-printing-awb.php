@@ -1,6 +1,5 @@
 <?php
 
-include_once(plugin_dir_path(__FILE__) .'/courierFanSafe.class.php');
 include_once(plugin_dir_path(__FILE__) .'/courierFan.class.php');
 
 class FanGenereazaAWB

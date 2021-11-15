@@ -44,7 +44,7 @@
                 <td>
                     <select name="awb[service_type]">
                     <?php 
-                        $services = (new SafealternativeNemoClass)->get_services();
+                        $services = (new CourierNemo)->get_services();
                         $current_service = $_POST['awb']['service_type'];
                         if (!empty($services) && empty($services['error'])) {
                             foreach($services as $service) {
