@@ -321,7 +321,7 @@ class NemoAWB
         $postcode = $order->get_shipping_postcode() ?: safealternative_get_post_code($recipient_address_state_id, $recipient_address_city_id);
         $observation = get_option('nemo_observation');
 
-        $awb_info = [
+        $awb_details = [
             'type' => get_option('nemo_package_type'),
             'service_type' => get_option('nemo_service'),
             'cnt' => get_option('nemo_parcel_count'),
@@ -356,44 +356,34 @@ class NemoAWB
             'comments' => $observation,
         ];       
          
-        $awb_info = apply_filters('safealternative_awb_details', $awb_info, 'Nemo', $order);
+        $awb_details = apply_filters('safealternative_awb_details', $awb_details, 'Nemo', $order);
 
-        $courier = new SafealternativeNemoClass();
+        
+        $awb_details['api_key'] = get_option('nemo_key');;
+        $awb_details['token'] = get_option('token');
 
-        if($awb_info['retur'] == 'false'){
-            unset($awb_info['retur_type']);
+        if($awb_details['retur'] == 'false'){
+            unset($awb_details['retur_type']);
         }
+        
+        $courier  = new CourierNemoSafe();
+        $response = $courier->callMethod("generateAwb", $awb_details, 'POST');
 
-        $result = $courier->callMethod("generateAwb", $awb_info, 'POST');
 
-        if ($result['status']!="200") {
-            set_transient('nemo_account_settings', json_decode($result['message']), MONTH_IN_SECONDS);
-        } else {
-            $message = json_decode($result['message']);
-            
-            if ( !empty($message->error) ) {
-                set_transient('nemo_account_settings', 'NemoExpress AWB: ' . $message->error, MONTH_IN_SECONDS);
-            } else {
-                $awb = $message->awb;
-                
-                if ($trimite_mail=='da') {
-                    NemoAWB::send_mails($order_id, $awb, $awb_info['recipient_email']);
-                }
-                
-                update_post_meta($order_id, 'awb_nemo', $awb);
-                update_post_meta($order_id, 'awb_nemo_status', 'Inregistrat');
-                do_action('safealternative_awb_generated', 'Nemo', $awb);
 
-                $account_status_response = $courier->callMethod("newAccountStatus", [], 'POST');
-                $account_status = json_decode($account_status_response['message']);
-
-                if($account_status->show_message){
-                    set_transient( 'nemo_account_status', $account_status->message, MONTH_IN_SECONDS );
-                } else {
-                    delete_transient( 'nemo_account_status' );
-                }                       
+        if ($response['status'] == 200) {
+            if (!$response['success']) wp_die($response['error']);
+        
+            $awb = $response['message'];
+        
+            if ($trimite_mail=='da') {
+                NemoAWB::send_mails($order_id, $awb, $awb_details);
             }
-        }            
+            
+            update_post_meta($order_id, 'awb_nemo', $awb);
+            update_post_meta($order_id, 'awb_nemo_status', 'Inregistrat');
+            do_action('curiero_awb_generated', 'Nemo', $awb);
+        }      
 	}// end function
  
     static public function send_mails($idOrder, $awb, $receiver_email) 

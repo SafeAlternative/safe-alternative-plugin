@@ -24,7 +24,7 @@ function update_nemo_awb_status()
                 'awbno' => $awb_nemo_for_update
             ];
 
-            $courier  = new APINemoClass();
+            $courier  = new CourierNemo();
             $awb_status = $courier->getLatestStatus($json_parameters);
             
             if(!$awb_status) continue;

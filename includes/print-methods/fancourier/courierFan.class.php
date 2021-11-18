@@ -84,7 +84,6 @@ class CourierFan
             $api_url = 'view_awb_integrat.php';
         }
 
-        
 		$response = $this->callCourierMethod($api_url, 'POST', $parameters);
 		return $response;      
         

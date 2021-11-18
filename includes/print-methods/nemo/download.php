@@ -3,10 +3,9 @@
 define('WP_USE_THEMES', false);
 include '../../../../../../wp-load.php';
 
-$dir = plugin_dir_path(__FILE__);
-include_once($dir . 'courier.class.php');
+include_once(plugin_dir_path(__FILE__) . 'courierNemo.class.php');
 
-$courier = new SafealternativeNemoClass();
+$courier = new CourierNemo();
 $awb = get_post_meta($_GET['order_id'], 'awb_nemo', true);
 
 $parameters = [
@@ -15,19 +14,15 @@ $parameters = [
 	'pdf'=>'true'
 ];
 
-$result = $courier->callMethod("downloadAwb", $parameters, 'POST');
+$result = $courier->printAwb($parameters);
 
-if ($result['status'] != "200") {
-    wp_die("<b class='bad'>Eroare la tiparire: </b>" . $result['message'] ?? 'AWB-ul nu a putut fi gasit.');
-    exit;
-} else {
-    $filename = $awb . '-awb-nemo.pdf';
-    $pdf = $result['message'];
+$filename = $awb . '-awb-nemo.pdf';
+$pdf = $result;
 
-    header("Content-Type:application/pdf");
-    header("Content-Disposition:inline;filename=" . $filename);
-    header('Accept-Ranges: bytes');
+header("Content-Type:application/pdf");
+header("Content-Disposition:inline;filename=" . $filename);
+header('Accept-Ranges: bytes');
 
-    echo $pdf;
-    exit;
-}
+echo $pdf;
+exit;
+

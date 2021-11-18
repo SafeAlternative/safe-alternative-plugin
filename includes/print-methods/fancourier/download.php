@@ -13,6 +13,7 @@ $password   = rawurlencode(get_option('fan_password'));
 $client_id  = rawurlencode(get_post_meta($_GET['order_id'], 'awb_fan_client_id', true) ?: get_option('fan_clientID'));
 $parameters['nr'] = $awb;
 $parameters['page_type'] = get_option('fan_page_type');
+$parameters['html_pdf'] = 'pdf';
 
 $fan_obj = new CourierFan($user, $password, $client_id);
 $result = $fan_obj->printAwb($parameters);

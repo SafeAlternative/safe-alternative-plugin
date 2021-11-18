@@ -37,6 +37,41 @@ class CourierNemo
     }
 
 	
+    public function printAwb($parameters)
+    {
+        $this->api_url = "https://app.nemoexpress.ro/nemo/API/print?";
+        
+
+        $parameters += [
+            'api_key' => get_option('nemo_key')
+        ];
+
+        $this->api_url .= http_build_query($parameters);
+        curl_setopt($this->curl, CURLOPT_URL, $this->api_url);
+        curl_setopt($this->curl, CURLOPT_TIMEOUT, 5);
+
+        $result = curl_exec($this->curl);
+
+        return $result;
+    }
+
+    public function deleteAwb($parameters)
+    {
+        $this->api_url = "https://app.nemoexpress.ro/nemo/API/cancel?";
+        
+
+        $parameters += [
+            'api_key' => get_option('nemo_key')
+        ];
+
+        $this->api_url .= http_build_query($parameters);
+        curl_setopt($this->curl, CURLOPT_URL, $this->api_url);
+        curl_setopt($this->curl, CURLOPT_TIMEOUT, 5);
+
+        $result = curl_exec($this->curl);
+
+        return $result;
+    }
     public function get_services($main = true): ?array
     {
         $this->api_url = "https://app.nemoexpress.ro/nemo/API/list_services?";

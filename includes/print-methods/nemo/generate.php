@@ -14,16 +14,11 @@ if($awb_details['retur'] == 'false'){
 
 $awb_details['api_key'] = get_option('nemo_key');;
 $awb_details['token'] = get_option('token');
-    
-//var_dump($awb_details);exit;
-
-
 
 $courier  = new CourierNemoSafe();
 $response = $courier->callMethod("generateAwb", $awb_details, 'POST');
 
 
-//var_dump($response);exit;
 if ($response['status'] == 200) {
     if (!$response['success']) wp_die($response['error']);
 
