@@ -63,12 +63,12 @@
         <table>
 
             <tr>
-                <th align="left">Utilizator Safe Alternative* :</th>
-                <td><input type="text" name="user_safealternative" value="<?= esc_attr(get_option('user_safealternative')); ?>" size="50" placeholder="Numele utilizatorului Safe Alternative"/></td>
+                <th align="left">Email * :</th>
+                <td><input type="text" name="email_safealternative" value="<?= esc_attr(get_option('email_safealternative')); ?>" size="50" placeholder="Email cont Safe Alternative"/></td>
             </tr>
             
             <tr>
-                <th align="left">Parola Safe Alternative* :</th>
+                <th align="left">Parola* :</th>
                 <td><input type="password" name="password_safealternative" value="<?= esc_attr(get_option('password_safealternative')); ?>" size="50" placeholder="Parola utilizatorului Safe Alternative"/></td>
             </tr>
 
@@ -341,7 +341,7 @@
 
 
         $('button[name="validate_api"]').on('click', function(){
-            let user_field = $('input[name="user_safealternative"]'),
+            let email_field = $('input[name="email_safealternative"]'),
                 pass_field = $('input[name="password_safealternative"]'),
                 validity_field = $('input[name="auth_validity"]'),
                 token_field = $('input[name="token"]'),
@@ -352,7 +352,7 @@
                 url: url+"login",
                 async: false,
                 data: {
-                    username: user_field.val(),
+                    email: email_field.val(),
                     password: pass_field.val(),
                 },
                 dataType: "json",
@@ -362,7 +362,7 @@
 
                     if(response['success']){
                         responseHereApi.css('color', '#34a934');
-                        user_field.attr('style', '');
+                        email_field.attr('style', '');
                         pass_field.attr('style', '');
                         validity_field.val(1);
                         token_field.val(response['token']);
@@ -371,7 +371,7 @@
                     } else {
                         responseHereApi.css('color', '#f44336');                      
                         pass_field.attr('style', '');
-                        user_field.css('box-shadow', '0 0 2px 2px rgba(228, 7, 7, 0.45)');
+                        email_field.css('box-shadow', '0 0 2px 2px rgba(228, 7, 7, 0.45)');
                         validity_field.val(0);
                         token_field.val('NOTOKEN');
                         $('#submit').click();
